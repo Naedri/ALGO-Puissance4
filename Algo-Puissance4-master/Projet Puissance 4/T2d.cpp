@@ -25,9 +25,9 @@ unsigned int getHauteur(const T2d* t) {
 char getSymbole(unsigned int i) {
 	assert(i < 3);
 	static const char symboles[3] = { '.', 'X', 'O' };
-	// le tableau est intialisÈ au premier appel
-	// il n'est pas dÈtruit en sortant de la fonction
-	// il est stockÈ avec les variables globales
+	// le tableau est intialis√© au premier appel
+	// il n'est pas d√©truit en sortant de la fonction
+	// il est stock√© avec les variables globales
 	// avant le main()
 	return symboles[i];
 }
@@ -58,22 +58,22 @@ void toString(const T2d* t, char* s) {
 		d += sprintf(s + d, "%c ", col);
 	d += sprintf(s + d, "\n");
 }
-//version non optimisÈ
+//version non optimis√©
 //bool estVictoire(const T2d* t, char col, unsigned int lig) {
-//	//verification verticale, il n'y pas besoin de vÈrifier au dessus du dernier jeton jouÈ.
-//	int sommeColonne, sommeLigneDroite, sommeLigneGauche, sommeDiagoHautDroit, sommeDiagoBasGauche, sommeDiagoHautGauche, sommeDiagoBasDroit; // instanciation des diffÈrentes sommes utiles
-//	sommeColonne = sommeLigneDroite = sommeLigneGauche = sommeDiagoHautDroit = sommeDiagoBasGauche = sommeDiagoHautGauche = sommeDiagoBasDroit = 0; // initialisation des sommes ‡ 0
+//	//verification verticale, il n'y pas besoin de v√©rifier au dessus du dernier jeton jou√©.
+//	int sommeColonne, sommeLigneDroite, sommeLigneGauche, sommeDiagoHautDroit, sommeDiagoBasGauche, sommeDiagoHautGauche, sommeDiagoBasDroit; // instanciation des diff√©rentes sommes utiles
+//	sommeColonne = sommeLigneDroite = sommeLigneGauche = sommeDiagoHautDroit = sommeDiagoBasGauche = sommeDiagoHautGauche = sommeDiagoBasDroit = 0; // initialisation des sommes √† 0
 //	char symbole = get(t, col, lig);
 //	unsigned int y = lig;
 //	for (y; y >= 1 && get(t, col, y) == symbole; --y, ++sommeColonne)
 //		;
-//	//verification horizontale, pour des soucis de lisibilitÈ du code, on commence sur la case du dernier jeton jouÈ.
+//	//verification horizontale, pour des soucis de lisibilit√© du code, on commence sur la case du dernier jeton jou√©.
 //	for (char i = col; i <= 'g' && get(t, i, lig) == symbole; ++i, ++sommeLigneDroite)
 //		;
 //	for (char i = col; i >= 'a' && get(t, i, lig) == symbole; --i, ++sommeLigneGauche)
 //		;
 //	//verification diagonale (/)
-//	y = lig; // on reinitialise y car il a ÈtÈ manipulÈ dans les boucles for prÈcÈdentes
+//	y = lig; // on reinitialise y car il a √©t√© manipul√© dans les boucles for pr√©c√©dentes
 //	for (char i = col; i <= 'g' && y <= 6 && get(t, i, y) == symbole; ++i, ++y, ++sommeDiagoHautDroit)
 //		;
 //	y = lig;
@@ -97,10 +97,10 @@ void viderGrille(T2d* t) {
 }
 
 bool estVictoire(const T2d* t, char col, unsigned int lig) {
-	int sommeColonne, sommeLigne, sommeDiagDroite, sommeDiagGauche; // instanciation des diffÈrentes sommes utiles pour vÈrifier les 4 alignements possibles (--,|,/,\)
-	sommeColonne = sommeLigne = sommeDiagDroite = sommeDiagGauche = 0; // initialisation des sommes ‡ 0
-	char symbole = get(t, col, lig); // on rÈcupËre le symbole du dernier jeton jouÈ
-	//verification verticale (|), on note qu'il n'y pas besoin de vÈrifier au dessus du dernier jeton jouÈ.
+	int sommeColonne, sommeLigne, sommeDiagDroite, sommeDiagGauche; // instanciation des diff√©rentes sommes utiles pour v√©rifier les 4 alignements possibles (--,|,/,\)
+	sommeColonne = sommeLigne = sommeDiagDroite = sommeDiagGauche = 0; // initialisation des sommes √† 0
+	char symbole = get(t, col, lig); // on r√©cup√®re le symbole du dernier jeton jou√©
+	//verification verticale (|), on note qu'il n'y pas besoin de v√©rifier au dessus du dernier jeton jou√©.
 	for (unsigned int i = 1; lig - i >= 1 && get(t, col, lig - i) == symbole; ++i, ++sommeColonne)
 		;
 	//verification horizontale (<-->), on recherche dans les deux sens.
@@ -118,7 +118,7 @@ bool estVictoire(const T2d* t, char col, unsigned int lig) {
 		;
 	for (unsigned int i = 1; col + i <= 'g' && lig - i >= 1 && get(t, col + i, lig - i) == symbole; ++i, ++sommeDiagGauche)
 		;
-	if (sommeColonne >= 3 || sommeLigne >= 3 || sommeDiagGauche >= 3 || sommeDiagDroite  >= 3) // si il y a un alignement (i.e 4 jetons alignÈs) on retourne vraie
+	if (sommeColonne >= 3 || sommeLigne >= 3 || sommeDiagGauche >= 3 || sommeDiagDroite  >= 3) // si il y a un alignement (i.e 4 jetons align√©s) on retourne vraie
 		return true;
 	return false;
 }
@@ -132,7 +132,7 @@ bool estRemplie(T2d* t,char col){
 unsigned int placerJeton(T2d* t, char col, char symbole){
 	assert(!estRemplie(t, col));
 	unsigned int i = 1;
-	for (; i <= getHauteur(t) && get(t, col, i) != '.'; ++i)
+	for (; i <= getHauteur(t) && get(t, col, i) != '.'; ++i) //On parcours la grille en partant de la fin et on place le jeton √† la premi√®re case vide trouv√©e
 		;
 	set(t, col, i, symbole);
 	return i;
@@ -144,7 +144,7 @@ unsigned int placerJeton(T2d* t, char col, char symbole){
 //	do{
 //		printf("Entrez la colonne dans laquelle vous souhaitez jouer \n");
 //		a = scanf("%c %c",&choixColonne,&c);
-//		if (choixColonne < 'a' || choixColonne >'g' || a !=1) // il faut aussi vÈrifier que la colonne n'est pas pleine
+//		if (choixColonne < 'a' || choixColonne >'g' || a !=1) // il faut aussi v√©rifier que la colonne n'est pas pleine
 //			printf("Ce n'est pas une valeur valide, la colonne doit etre comprise entre a et g\n");
 //		viderBuffer();
 //	} while (choixColonne < 'a' || choixColonne >'g' || a != 1);
@@ -154,7 +154,7 @@ unsigned int placerJeton(T2d* t, char col, char symbole){
 char choixJoueur(T2d* t) {
 	char choixColonne;
 	char largeMax = 'a' + getLargeur(t) - 1;
-	char c; //c sert ‡ vÈrifier que l'utilisateur entre un seul caractËre, ex : "aaaa" non acceptÈ.
+	char c; //c sert √† v√©rifier que l'utilisateur entre un seul caract√®re, ex : "aaaa" non accept√©.
 	printf("Entrez une colonne svp\n");
 	while (((scanf("%c%c", &choixColonne, &c)) != 2 || c != '\n') && viderBuffer() || choixColonne <'a' || choixColonne > largeMax || estRemplie(t,choixColonne)) { 
 		printf("Veuillez entrez une valeur valide : ");
