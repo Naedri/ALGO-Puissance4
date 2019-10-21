@@ -154,9 +154,9 @@ unsigned int placerJeton(T2d* t, char col, char symbole){
 char choixJoueur(T2d* t) {
 	char choixColonne;
 	char largeMax = 'a' + getLargeur(t) - 1;
-	char c; //c sert à vérifier que l'utilisateur entre un seul caractère, ex : "aaaa" non accepté.
+	char c; //c sert à vérifier que l'utilisateur entre un seul caractère, ex : "aaaa" non accepté. Lorsque on entre un caractère, on en écrit en fait 2 deux avec le \n, il suffit donc de vérifier que c est bien égal à \n après le scanf
 	printf("Entrez une colonne svp\n");
-	while (((scanf("%c%c", &choixColonne, &c)) != 2 || c != '\n') && viderBuffer() || choixColonne <'a' || choixColonne > largeMax || estRemplie(t,choixColonne)) { 
+	while (((scanf("%c%c", &choixColonne, &c)) != 2 || c != '\n') && viderBuffer() || choixColonne <'a' || choixColonne > largeMax || estRemplie(t,choixColonne)) { // si l'utilisateur entre une valeur eronnée, on vide le buffer avant la prochain scanf,  on vérifie aussi que l'entrée soit valide, c'est à dire comprise dans les valeurs du tableau et dans une colonne non remplie
 		printf("Veuillez entrez une valeur valide : ");
 	}
 	return choixColonne;
