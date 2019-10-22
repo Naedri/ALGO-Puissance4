@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <stdio.h> //FILE structure est definie dans stdio.h
 #include <string.h>
-#include <malloc.h>
 
 #include "joueur.h"
 
@@ -11,25 +10,18 @@
 #define FILEPATH_JOUEURS '/joueurs/joueurs.txt'
 
 /*attention
-le fichier dans lequel sont sauvegardes les details des joueurs doit avoir les details suivants :
-./joueurs/joueurs.txt
+le dossier dans lequel sont sauvegardes les details des joueurs doit avoir les details suivants :
+	./joueurs
+le fichier contenant les profils de chaque joueurs est appelé par leur nom
 */
 
-/* parametres de manipulation des fichiers
-	"r": lecture seule. Vous pourrez lire le contenu du fichier, mais pas y ecrire. Le fichier doit avoir ete cree au prealable.
-	"w": ecriture seule. Vous pourrez ecrire dans le fichier, mais pas lire son contenu. Si le fichier n'existe pas, il sera cree.
-	"a": mode d'ajout. Vous ecrirez dans le fichier, en partant de la fin du fichier. Vous ajouterez donc du texte a la fin du fichier. Si le fichier n'existe pas, il sera cr��.
-	"r+": lecture et ecriture. Vous pourrez lire et ecrire dans le fichier. Le fichier doit avoir ete cree au prealable.
-	"w+": lecture et ecriture, avec suppression du contenu au préalable. Le fichier est donc d'abord vide de son contenu, vous pouvez y ecrire, et le lire ensuite. Si le fichier n'existe pas, il sera cr��.
-	"a+": ajout en lecture / ecriture a la fin. Vous ecrivez et lisez du texte a partir de la fin du fichier. Si le fichier n'existe pas, il sera cree.
-*/
+
 
 //creationJoueur
 //permet de verifier si le pseudo est déjà pris dans le fichier '/joueurs/joueurs.txt'
 //permet de créer une variable Joueur avec le pseudo, nom et prénom
 //initialise les statistiques des parties
-
-void creationJoueur(Joueur * j, char pseudo, char nom, char prenom, const char* filepath_joueurs){
+void creationJoueur(Joueur* j, char pseudo, char nom, char prenom, const char* filepath_joueurs){
 	FILE* fichier = NULL; 
 	fichier = fopen(filepath, "r"); //"r": lecture seule
 	j-> pseudo = pseudo;
@@ -40,17 +32,20 @@ void creationJoueur(Joueur * j, char pseudo, char nom, char prenom, const char* 
 	j->partiesJouees = 0;
 	j->partiesGagnees = 0;
 	j->partiesPerdues = 0;
-	
 }
-
-/* definiition pseudo
+/*
+ * int main(){
+ * definiition pseudo
  * definir char pseduo[10]
  * fget
  * vider buffer 
  * verification pas d espaces
  * verifiaction taille character < 8+1 (9)
+ * }
  */
 
+//nombreLignesTable
+//denombre le nombre de ligne pour un fichier dont le chemin est donne
 int nombreLignesTable(const char* filepath) {
 	FILE* fichier = NULL;
 	fichier = fopen(filepath, "r");
@@ -74,7 +69,115 @@ int nombreLignesTable(const char* filepath) {
 	return ligne;
 }
 
-void ecritureJoueurs(Joueur* j){
+//sauvegarderJoueur
+//ecrit un fichier dont le nom est 'pseudo.txt' étant une sauvegarde de la structure Joueur
+//les détails du joueur j doivent avoir été réalisés au préalable dans le main.cpp avec la fonction creationJoueur
+void sauvegarderJoueur(Joueur* j){
+	(char *) pseudo = j-> pseudo ;
+	FILE *fichier = NULL;
+	const char nomFichier = strcat(pseudo,".txt") 
+	
+	//ouverture du fichier pour ecriture
+	fichier = fopen (nomfichier, "w");//writte only
+	if (fichier == NULL) 
+	{ 
+		fprintf(stderr, "\nIL y a eu une erreur dans l'ouverture du fichier\n"); 
+		exit (1); 
+	} 
+
+	// ecriture de la structure Joueur dans le fichier
+	fwrite (&j, sizeof(struct Joueur), 1, fichier); //attention peut etre pas &j
+	
+	if(fwrite != 0) 
+		printf("Le profil du joueur a été sauvegarder correctement.\n"); 
+	else
+		fprintf(stderr,"\nIl y a eu une erreur dans l'ecriture du fichier.\n"); 
+
+	// fermeture du fichier
+	fclose (fichier);
+}
+
+//chargementJoueur
+//permet en indiquant le nom pseudo et le chemin path de retrouver le fichier suivant ./path/pseudo.txt
+//afin de charger les details de la variable struct Joueur qui y sont sauvegarder
+//renvoie la variable Joueur pour le pseudo associé
+Joueur chargementJoueur(const char pseudo, const char filepath){
+	FILE *fichier = NULL; 
+	
+	const char nomFichier = strcat(filepath, pseudo) ;  
+	nomFichier = strcat(nomFichier, ".txt") ;
+
+	// ouverture du fichier pseudo.txt pour lecture
+	fichier = fopen (nomFichier, "r"); //read only
+	if (fichier == NULL) 
+	{ 
+		fprintf(stderr, "\nIL y a eu une erreur dans l'ouverture du fichier\n"); 
+		exit (1); 
+	} 
+	
+	// lecture du fichier pseudo.txt jusqu'à la fin du fichier 
+	while(fread(&fichier, sizeof(struct Joueur), 1, fichier)){
+		return j;
+	}
+
+	// fermeture du fichier
+	fclose (fichier);
+}
+
+//affichageJoueur
+//etapes
+//fonction qui permet à partir du pseudo d'afficher les détails du profil du joueur associé
+//deplacement dans le dossier des joueurs
+//recherche du fichier du joueur i.e. pseudo.txt
+//ouverture du fichier pseudo.txt
+//chargement des donnees via chargementJoueur(pseudo)
+//affichage des détails du profil avec une phrase
+//fermeture du fichier pseudo.txt
+void affichageJoueur(const char pseudo, const char filepath){	
+	Joueur j = {"", "", "", 0, 0,0};
+	j = chargementJoueur(const char pseudo, const char filepath);	
+	if (j.pseudo == "") 
+	{ 
+		fprintf(stderr, "\nIL y a eu une erreur dans le chargement du fichier du Joueur associe.\n"); 
+		exit (1); 
+	} 
+	printf("-%s s'appelle %s %s, il a joue %i parties, son taux de victoire est de %f.\n ", 
+	j.pseudo, j.prenom, j.nom, j.partiesJouees, j.partiesRatio);
+}
+
+//afficherInfo
+//n est plus utile
+//affiche une chaine de caractere 
+//a partir de string selectionnee a partir d'un ranginitial donne jusqu'a un separateur donne
+//doit renvoyer un pointeur car on utilise un malloc ?
+char *afficherInfo(const char * string, unsigned int ranginitial, char separateur){
+	char* info = NULL ;
+	info = (char*)malloc(TAILLE_MAX_CELLULE * sizeof(char));
+	unsigned int i = 0 ;
+	while (string[ranginitial] != separateur){
+		info[i] = string[ranginitial];
+		++ranginitial;
+		++i;
+	}
+	info[i]='\0'; // on termine le mot par ce caractère pour indiquer qu il est fini
+	return info;
+}
+
+//matchJoueur
+//modifie le score de parties gagnées ou perdues et donc partiesRatio d'un joueur avec le pseudo donné
+//mais il faut tut de meme utiliser la fonctoin sauvegarder joueur pour reecrire un fichier pseudo.txt
+void matchJoueur(Joueur* j, char pseudo, bool victoire) {
+	++(j->partiesJouees);
+
+	if (victoire == true)
+		++(j->partiesGagnees);
+	if (victoire == false)
+		++(j->partiesPerdues);
+
+}
+
+//elemnt composant Joueur
+{	
 	char pseudo = j->pseudo;
 	char nom = j->nom;
 	char prenom = j->prenom;
@@ -94,101 +197,4 @@ void ecritureJoueurs(Joueur* j){
 	{
 		printf("Impossible d'ouvrir le fichier repertoire/joueurs.txt");
 	}
-}
-
-Joueur chargementJoueur( ){
-	
-	return j;
-}
-
-void affichageTableJoueurs(const char* filepath){	
-	FILE* fichier = NULL; 
-	fichier = fopen(filepath, "r"); //"r": lecture seule
-
-	fseek(fichier, 84, SEEK_SET); //84 caracteres de nom de colonnes plus retour-chariot
-	if (fichier != NULL)
-	{
-		char* ligne = NULL ;
-		ligne = (char*)malloc(TAILLE_MAX_LIGNE * sizeof(char));
-
-		while (fgets(ligne, TAILLE_MAX_LIGNE, fichier) != NULL) 
-        {
-			//on doit travailler sur des pointeurs car c est comme ca que la fonction AfficherInfo a ete ecrites
-			
-			char* id = NULL ;
-			char* pseudo = NULL ;
-			char* nom = NULL ;
-			char* prenom = NULL ;
-			char* partiesJouees = NULL ;
-			char* partiesGagnees = NULL ;
-			char* partiesPerdues = NULL ;
-			char* partiesRatio = NULL ;
-			
-			*id = afficherInfo(ligne, 0, ';');
-			char* chaine = strchr(ligne, ';');
-			if (chaine != NULL)
-			{
-				*pseudo=afficherInfo(chaine, 0, ';');
-				
-				chaine=strchr(chaine+1,';');
-				*nom=afficherInfo(chaine, 0, ';');
-				
-				chaine=strchr(chaine+1,';');
-				*prenom=afficherInfo(chaine, 0, ';');
-				
-				chaine=strchr(chaine+1,';');
-				*partiesJouees=afficherInfo(chaine, 0, ';');
-				
-				chaine=strchr(chaine+1,';');
-				*partiesGagnees=afficherInfo(chaine, 0, ';');
-				
-				chaine=strchr(chaine+1,';');
-				*partiesPerdues=afficherInfo(chaine, 0, ';');
-				
-				chaine=strchr(chaine+1,';');
-				*partiesRatio=afficherInfo(chaine, 0, ';');
-			}
-
-			printf("%s s'appelle %s %s, il a joue %s parties, son taux de victoire est de %s.\n ", 
-			pseudo, prenom, nom, partiesJouees, partiesRatio);
-		}
-	}
-
-	else
-	{
-		printf("Impossible d'ouvrir le fichier repertoire/joueurs.txt");
-	}
-	fclose(fichier);
-}
-
-//afficherInfo
-//affiche une chaine de caractere 
-//a partir de string selectionnee a partir d'un ranginitial donne jusqu'a un separateur donne
-char * afficherInfo(const char * string, unsigned int ranginitial, char separateur){
-	char* info = NULL ;
-	info = (char*)malloc(TAILLE_MAX_CELLULE * sizeof(char));
-	unsigned int i = 0 ;
-	while (string[ranginitial] != separateur){
-		info[i] = string[ranginitial];
-		++ranginitial;
-		++i;
-	}
-	info[i]='\0'; // on termine le mot par ce caractère pour indiquer qu il est fini
-	return info;
-}
-
-//matchJoueur
-//modifie le score de parties gagnées ou perdues et donc partiesRatio d'un joueur pseudo donné
-void matchJoueur(Joueur* j, char pseudo, bool victoire) {
-	++(j->partiesJouees);
-
-	if (victoire == true)
-		++(j->partiesGagnees);
-	if (victoire == false)
-		++(j->partiesPerdues);
-
-}
-
-void sauvegarderJoueur(){
-	;
 }
