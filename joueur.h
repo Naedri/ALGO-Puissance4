@@ -13,8 +13,13 @@ struct Joueur {
 };
 typedef struct Joueur Joueur;
 
-void matchJoueur(Joueur* j, char pseudo, bool victoire);
+void creationJoueur(Joueur * j, char pseudo, char nom, char prenom){
 
+void matchJoueur(Joueur* j, char pseudo, bool victoire);
+int nombreLignesTable(char filepath);
+void ecritureJoueurs(Joueur* j);
+void affichageTableJoueurs(char filepath);
+char afficherInfo(char * string, unsigned int ranginitial, char separateur);
 
 
 #endif // JOUEUR_H_INCLUDED
