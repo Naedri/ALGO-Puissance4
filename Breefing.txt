@@ -1,0 +1,28 @@
+Projet sous forme de jeux : 
+Jeux selon geometrie variable
+
+Sujets possibles : 
+	1)	Puissance 4
+	2) 	Hex : affichage case en hexagone
+	3) 	Combat des 4vents
+
+Sujet choisi : Puissance 4
+
+Conception finale
+	7 colonnes de A à G (verticales)
+	6 rangées de 1 à 6 (horizontales)
+	Stocker l'etat de la partie
+	Reprendre la partie en chargeant
+	Jeu à deux joueurs physique
+	Afficher état du jeu en mode console (mettre des * et des +)
+	Respect des règles (càd détection de fin de partie)
+	Gérer le score (On fait plusieurs parties, le 1er qui arrive à 5 a gagner)
+
+
+Bonus 
+	Jeu contre la machine
+		Tirage aléatoire
+		Minmax
+		alpha beta
+
+Matrice
