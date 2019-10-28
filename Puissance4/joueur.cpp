@@ -1,4 +1,5 @@
 /// @file joueur.cpp
+
 #include <stdlib.h> //initialisation à NULL
 #include <stdio.h> //FILE structure est definie dans stdio.h
 #include <string.h>
@@ -113,9 +114,10 @@ void sauvegarderJoueur(Joueur j, const char *filepath_joueurs){
 
     else {
         // ecriture de la structure Joueur dans le fichier
-        fwrite (&j, sizeof(Joueur), 1, fichier);
-
-        if(fwrite != 0){
+        int count = fwrite (&j, sizeof(Joueur), 1, fichier);
+		
+		// if(fwrite != 0){
+        if(count >= 1){
             printf("Le profil du joueur a été sauvegarder correctement.\n");
         }
         else{
@@ -165,7 +167,7 @@ void affichageJoueur(char *pseudo, const char *filepath_joueurs){
 	Joueur j = NOUVEAU_JOUEUR;
 	j = chargementJoueur(pseudo,filepath_joueurs); //chargement des donnees via chargementJoueur(pseudo)
 
-	if (j.pseudo == "")
+	if (strcmp(j.pseudo,"") != 1)
 	{
 		fprintf(stderr, "\nIL y a eu une erreur dans le chargement du fichier du Joueur associe.\n");
 		exit (1);
@@ -182,10 +184,21 @@ void affichageJoueur(char *pseudo, const char *filepath_joueurs){
 void matchJoueur(Joueur* j, bool victoire){
 	++(j->partiesJouees);
 
-	if (victoire == true)
+	if (victoire == true){
 		++(j->partiesGagnees);
 		j->partiesRatio = j->partiesGagnees/j->partiesJouees;
-	if (victoire == false)
+	}
+
+	if (victoire == false){
 		++(j->partiesPerdues);
-		j->partiesRatio = j->partiesGagnees/j->partiesJouees;
+		j->partiesRatio = j->partiesGagnees/j->partiesJouees;		
+	}
+
+}
+
+//getPseudo
+//renvoie un pointeur de chaine de caracteres
+//du pseudo de la varaible j de type struct Joueur
+char* getPseudo(Joueur* j){
+	return j->pseudo ;
 }

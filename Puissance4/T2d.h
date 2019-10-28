@@ -1,4 +1,3 @@
-/// @file T2d.h
 #pragma once
 
 // La structure T2d représente un tableau
@@ -28,3 +27,9 @@ char choixJoueur(T2d*);// retourne la colonne choisie
 int viderBuffer();
 bool estRemplie(T2d*,char col);
 unsigned int placerJeton(T2d*, char col, char symbole); // retourne la ligne dans laquelle le jeton est placée
+
+
+/* FONCTIONS POUR L'IA*/
+void annulerCoup(T2d*, char col); // annule le dernier jeton placé dans col.
+char* coupsLegaux(T2d*); // retourne la liste des coups légaux pour un état du jeu
+int evaluerCoup(T2d*, char col, unsigned int lig);

@@ -20,5 +20,5 @@ void sauvegarderJoueur(Joueur j, const char *filepath_joueurs);
 Joueur chargementJoueur(char *pseudo,const char *filepath_joueurs);
 void affichageJoueur(char *pseudo, const char *filepath_joueurs);
 void matchJoueur(Joueur* j, bool victoire);
-
+char* getPseudo(Joueur* j);
 #endif // JOUEUR_H_INCLUDED

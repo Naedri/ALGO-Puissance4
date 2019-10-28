@@ -1,4 +1,3 @@
-/// @file T2d.h
 #include "T2d.h"
 #include <assert.h>
 #include <malloc.h>
@@ -25,7 +24,7 @@ unsigned int getHauteur(const T2d* t) {
 
 char getSymbole(unsigned int i) {
 	assert(i < 3);
-	static const char symboles[3] = { '.', 'X', 'O' };
+	static const char symboles[3] = { '.', 'X', 'O' };// le premier élément représente le vide
 	// le tableau est intialisé au premier appel
 	// il n'est pas détruit en sortant de la fonction
 	// il est stocké avec les variables globales
@@ -59,38 +58,7 @@ void toString(const T2d* t, char* s) {
 		d += sprintf(s + d, "%c ", col);
 	d += sprintf(s + d, "\n");
 }
-//version non optimisé
-//bool estVictoire(const T2d* t, char col, unsigned int lig) {
-//	//verification verticale, il n'y pas besoin de vérifier au dessus du dernier jeton joué.
-//	int sommeColonne, sommeLigneDroite, sommeLigneGauche, sommeDiagoHautDroit, sommeDiagoBasGauche, sommeDiagoHautGauche, sommeDiagoBasDroit; // instanciation des différentes sommes utiles
-//	sommeColonne = sommeLigneDroite = sommeLigneGauche = sommeDiagoHautDroit = sommeDiagoBasGauche = sommeDiagoHautGauche = sommeDiagoBasDroit = 0; // initialisation des sommes à 0
-//	char symbole = get(t, col, lig);
-//	unsigned int y = lig;
-//	for (y; y >= 1 && get(t, col, y) == symbole; --y, ++sommeColonne)
-//		;
-//	//verification horizontale, pour des soucis de lisibilité du code, on commence sur la case du dernier jeton joué.
-//	for (char i = col; i <= 'g' && get(t, i, lig) == symbole; ++i, ++sommeLigneDroite)
-//		;
-//	for (char i = col; i >= 'a' && get(t, i, lig) == symbole; --i, ++sommeLigneGauche)
-//		;
-//	//verification diagonale (/)
-//	y = lig; // on reinitialise y car il a été manipulé dans les boucles for précédentes
-//	for (char i = col; i <= 'g' && y <= 6 && get(t, i, y) == symbole; ++i, ++y, ++sommeDiagoHautDroit)
-//		;
-//	y = lig;
-//	for (char i = col; i >= 'a' && y >= 1 && get(t, i, y) == symbole; --i, --y, ++sommeDiagoBasGauche)
-//		;
-//	//verification dagionale (\)
-//	y = lig;
-//	for (char i = col; i >= 'a' && y <= 6 && get(t, i, y) == symbole; --i, ++y, ++sommeDiagoHautGauche)
-//		;
-//	y = lig;
-//	for (char i = col; i <= 'g' && y >= 1 && get(t, i, y) == symbole; ++i, --y, ++sommeDiagoBasDroit)
-//		;
-//	if (sommeColonne >= 4 || sommeLigneDroite + sommeLigneGauche >= 4 || sommeDiagoBasGauche + sommeDiagoHautDroit >= 4 || sommeDiagoBasDroit + sommeDiagoHautGauche >= 4)
-//		return true;
-//	return false;
-//}
+
 
 void viderGrille(T2d* t) {
 	for (unsigned int i = 0; i < t->largeur * t->hauteur; ++i)
@@ -119,7 +87,7 @@ bool estVictoire(const T2d* t, char col, unsigned int lig) {
 		;
 	for (unsigned int i = 1; col + i <= 'g' && lig - i >= 1 && get(t, col + i, lig - i) == symbole; ++i, ++sommeDiagGauche)
 		;
-	if (sommeColonne >= 3 || sommeLigne >= 3 || sommeDiagGauche >= 3 || sommeDiagDroite  >= 3) // si il y a un alignement (i.e 4 jetons alignés) on retourne vraie
+	if (sommeColonne >= 3 || sommeLigne >= 3 || sommeDiagGauche >= 3 || sommeDiagDroite >= 3) // si il y a un alignement (i.e 4 jetons alignés) on retourne vraie
 		return true;
 	return false;
 }
@@ -127,10 +95,10 @@ int viderBuffer() {
 	while (getchar() != '\n');
 	return 1;
 }
-bool estRemplie(T2d* t,char col){
-	return get(t,col,getHauteur(t)) != '.';
+bool estRemplie(T2d* t, char col) {
+	return get(t, col, getHauteur(t)) != '.';
 }
-unsigned int placerJeton(T2d* t, char col, char symbole){
+unsigned int placerJeton(T2d* t, char col, char symbole) {
 	assert(!estRemplie(t, col));
 	unsigned int i = 1;
 	for (; i <= getHauteur(t) && get(t, col, i) != '.'; ++i)
@@ -138,29 +106,64 @@ unsigned int placerJeton(T2d* t, char col, char symbole){
 	set(t, col, i, symbole);
 	return i;
 }
-//char choixJoueur(T2d* t) {
-//	char choixColonne = 0;
-//	char c;
-//	int a;
-//	do{
-//		printf("Entrez la colonne dans laquelle vous souhaitez jouer \n");
-//		a = scanf("%c %c",&choixColonne,&c);
-//		if (choixColonne < 'a' || choixColonne >'g' || a !=1) // il faut aussi vérifier que la colonne n'est pas pleine
-//			printf("Ce n'est pas une valeur valide, la colonne doit etre comprise entre a et g\n");
-//		viderBuffer();
-//	} while (choixColonne < 'a' || choixColonne >'g' || a != 1);
-//	return choixColonne;
-//}
+void annulerCoup(T2d* t, char col) {
+	unsigned int hauteur = getHauteur(t);
+	for (; hauteur >= 1 && get(t, col, hauteur) == getSymbole(0); --hauteur)
+		;
+	set(t, col, hauteur, getSymbole(0));
+}
 
-char choixJoueur(T2d* t) {
+
+char choixJoueur(T2d* t) { // nom de variables pas assez explicite
 	char choixColonne;
 	char largeMax = 'a' + getLargeur(t) - 1;
 	char c; //c sert à vérifier que l'utilisateur entre un seul caractère, ex : "aaaa" non accepté.
 	printf("Entrez une colonne svp\n");
-	while (((scanf("%c%c", &choixColonne, &c)) != 2 || c != '\n') && viderBuffer() || choixColonne <'a' || choixColonne > largeMax || estRemplie(t,choixColonne)) {
-		printf("Veuillez entrez une valeur valide : ");
+	while (((scanf("%c%c", &choixColonne, &c)) != 2 || c != '\n') && viderBuffer() || choixColonne <'a' || choixColonne > largeMax || estRemplie(t, choixColonne)) {
+		printf("Veuillez entrez une valeur valide :\a ");
 	}
 	return choixColonne;
 }
 
+char* coupsLegaux(T2d* t) {
+	unsigned int largeur = getLargeur(t);
+	char* listeCoups = (char*)malloc(largeur + 1);
+	char col = 'a';
+	unsigned int i = 0;
+	for (; col <= 'a' + largeur - 1; ++col) {
+		if (!estRemplie(t, col))
+			listeCoups[i++] = col;
+	}
+	listeCoups[i] = 0;
+	return listeCoups;
+}
 
+int evaluerCoup(T2d* t, char col, unsigned int lig) {
+	const unsigned int alignementsMax = 4; //toutes les directions possibles
+	int sommmeAlignement[alignementsMax] = { 0 }; 
+	char symbole = get(t, col, lig); // on récupère le symbole du dernier jeton joué
+	for (unsigned int i = 1; lig - i >= 1 && get(t, col, lig - i) == symbole; ++i, ++sommmeAlignement[0])
+		;
+	//verification horizontale (<-->), on recherche dans les deux sens.
+	for (unsigned int i = 1; col + i <= 'g' && get(t, col + i, lig) == symbole; ++i, ++sommmeAlignement[1])
+		;
+	for (unsigned int i = 1; col - i >= 'a' && get(t, col - i, lig) == symbole; ++i, ++sommmeAlignement[1])
+		;
+	//verification diagonale montante (/)
+	for (unsigned int i = 1; col + i <= 'g' && lig + i <= 6 && get(t, col + i, lig + i) == symbole; ++i, ++sommmeAlignement[2])
+		;
+	for (unsigned int i = 1; col - i >= 'a' && lig - i >= 1 && get(t, col - i, lig - i) == symbole; ++i, ++sommmeAlignement[2])
+		;
+	//verification diagonale descendante (\)
+	for (unsigned int i = 1; col - i >= 'a' && lig + i <= 6 && get(t, col - i, lig + i) == symbole; ++i, ++sommmeAlignement[3])
+		;
+	for (unsigned int i = 1; col + i <= 'g' && lig - i >= 1 && get(t, col + i, lig - i) == symbole; ++i, ++sommmeAlignement[3])
+		;
+	for (unsigned int i = 0; i < alignementsMax; ++i) {
+		// si 0 renvoie 1
+		// si 1 renvoie 5
+		// si 2 renvoie 50
+		//si 3 renvoie 1000
+	}
+	return 0;
+}
