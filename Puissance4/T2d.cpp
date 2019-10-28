@@ -1,11 +1,13 @@
-#include "T2d.h"
+/// @file T2d.cpp
+#include <stdlib.h>
+#include <stdio.h> 
 #include <assert.h>
 #include <malloc.h>
-#include <stdio.h>
+
+#include "T2d.h"
 #pragma warning(disable:4996)
 
-void init(T2d* t, unsigned int largeur,
-	unsigned int hauteur) {
+void init(T2d* t, unsigned int largeur, unsigned int hauteur) {
 	t->largeur = largeur;
 	t->hauteur = hauteur;
 	t->grille = (char*)malloc(largeur * hauteur);
@@ -106,6 +108,18 @@ unsigned int placerJeton(T2d* t, char col, char symbole) {
 	set(t, col, i, symbole);
 	return i;
 }
+
+char choixJoueur(T2d* t) { // nom de variables pas assez explicite
+	char choixColonne;
+	char largeMax = 'a' + getLargeur(t) - 1;
+	char c; //c sert à vérifier que l'utilisateur entre un seul caractère, ex : "aaaa" non accepté.
+	printf("Entrez une colonne svp\n");
+	while ((((scanf("%c%c", &choixColonne, &c)) != 2 || c != '\n') && viderBuffer()) || choixColonne <'a' || choixColonne > largeMax || estRemplie(t, choixColonne)) {
+		printf("Veuillez entrez une valeur valide :\a ");
+	}
+	return choixColonne;
+}
+
 void annulerCoup(T2d* t, char col) {
 	unsigned int hauteur = getHauteur(t);
 	for (; hauteur >= 1 && get(t, col, hauteur) == getSymbole(0); --hauteur)
@@ -113,23 +127,11 @@ void annulerCoup(T2d* t, char col) {
 	set(t, col, hauteur, getSymbole(0));
 }
 
-
-char choixJoueur(T2d* t) { // nom de variables pas assez explicite
-	char choixColonne;
-	char largeMax = 'a' + getLargeur(t) - 1;
-	char c; //c sert à vérifier que l'utilisateur entre un seul caractère, ex : "aaaa" non accepté.
-	printf("Entrez une colonne svp\n");
-	while (((scanf("%c%c", &choixColonne, &c)) != 2 || c != '\n') && viderBuffer() || choixColonne <'a' || choixColonne > largeMax || estRemplie(t, choixColonne)) {
-		printf("Veuillez entrez une valeur valide :\a ");
-	}
-	return choixColonne;
-}
-
 char* coupsLegaux(T2d* t) {
 	unsigned int largeur = getLargeur(t);
 	char* listeCoups = (char*)malloc(largeur + 1);
 	char col = 'a';
-	unsigned int i = 0;
+	unsigned int i = 0u;
 	for (; col <= 'a' + largeur - 1; ++col) {
 		if (!estRemplie(t, col))
 			listeCoups[i++] = col;

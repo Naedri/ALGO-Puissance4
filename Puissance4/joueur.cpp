@@ -1,14 +1,11 @@
 /// @file joueur.cpp
-
 #include <stdlib.h> //initialisation à NULL
 #include <stdio.h> //FILE structure est definie dans stdio.h
 #include <string.h>
+#include <malloc.h>
+#include <dirent.h> //opendir() renvoie un pointeur de type DIR
 
 #include "joueur.h"
-
-#define FILEPATH_JOUEURS "/joueurs/"
-#define NOUVEAU_JOUEUR { "", "", "", 0, 0, 0, 0.0f }
-#define TAILLE_ID 10 //le pseudo, le nom, le prenom sont des chaines au max de 9caractères de long
 
 /*attention
 le dossier dans lequel sont sauvegardes les details des joueurs doit avoir les details suivants :
@@ -53,7 +50,6 @@ Joueur creationJoueur(char *pseudo, char *nom, char *prenom, const char *filepat
 		return *j;
 	}
 }
-
 
 //nombreLignesTable
 //denombre le nombre de ligne pour un fichier dont le chemin est donne
@@ -118,7 +114,7 @@ void sauvegarderJoueur(Joueur j, const char *filepath_joueurs){
 		
 		// if(fwrite != 0){
         if(count >= 1){
-            printf("Le profil du joueur a été sauvegarder correctement.\n");
+            printf("Le profil du joueur a été sauvegarde correctement.\n");
         }
         else{
             fprintf(stderr,"\nIl y a eu une erreur dans l'ecriture du fichier.\n");
@@ -151,7 +147,6 @@ Joueur chargementJoueur(char *pseudo,const char *filepath_joueurs){
 		exit (1);
 	}
 
-
 	// lecture du fichier pseudo.txt jusqu'à la fin du fichier
 	Joueur j = NOUVEAU_JOUEUR;
 	fread(&j, sizeof(Joueur), 1, fichier);
@@ -181,19 +176,20 @@ void affichageJoueur(char *pseudo, const char *filepath_joueurs){
 //matchJoueur
 //modifie le score de parties gagnees ou perdues et donc partiesRatio d'un joueur avec le pseudo donne
 //mais il faut tut de meme utiliser la fonctoin sauvegarder joueur pour reecrire un fichier pseudo.txt
-void matchJoueur(Joueur* j, bool victoire){
+void matchJoueur(Joueur* j, bool partieNulle, bool victoire){
 	++(j->partiesJouees);
+	
+	if (partieNulle == false) {
+		if (victoire == true){
+			++(j->partiesGagnees);
+		}
 
-	if (victoire == true){
-		++(j->partiesGagnees);
-		j->partiesRatio = j->partiesGagnees/j->partiesJouees;
+		else{
+			++(j->partiesPerdues);	
+		}		
 	}
 
-	if (victoire == false){
-		++(j->partiesPerdues);
-		j->partiesRatio = j->partiesGagnees/j->partiesJouees;		
-	}
-
+	j->partiesRatio = j->partiesGagnees/j->partiesJouees;	
 }
 
 //getPseudo
@@ -201,4 +197,39 @@ void matchJoueur(Joueur* j, bool victoire){
 //du pseudo de la varaible j de type struct Joueur
 char* getPseudo(Joueur* j){
 	return j->pseudo ;
+}
+
+//affichageJoueursDispo
+//fonction qui permet de lister les fichiers qui sont dans le dossier filepath_joueurs et donc d'afficher les pseudos des joueurs enregistres
+//opendir 
+//	https://www.ibm.com/support/knowledgecenter/en/SSLTBW_2.3.0/com.ibm.zos.v2r3.bpxbd00/rtoped.htm
+//	Si succès renvoie un pointeur vers un objet DIR. Cet objet décrit le répertoire et est utilisé dans les opérations suivantes sur le répertoire, de la même manière que les objets FILE sont utilisés dans les opérations d'E/S de fichiers.
+//readdir
+//	https://www.ibm.com/support/knowledgecenter/SSLTBW_2.3.0/com.ibm.zos.v2r3.bpxbd00/rtread.htm#rtread
+//	En cas de succès, readdir() renvoie un pointeur vers une structure de répertoire décrivant l'entrée de répertoire suivante dans le flux de répertoire. Quand readdir() atteint la fin du flux de répertoire, il retourne un pointeur NULL.
+// struct dirent {
+    // ino_t          d_ino;       /* inode number */
+    // off_t          d_off;       /* offset to the next dirent */
+    // unsigned short d_reclen;    /* length of this record */
+    // unsigned char  d_type;      /* type of file; not supported
+    // char           d_name[256]; /* filename */
+// };
+void affichageJoueursDispo(const char *filepath_joueurs){
+	//dirent.h
+    DIR *dossier = opendir(filepath_joueurs); // DIR *opendir(const char *dirname);
+	struct dirent *fichier = NULL ; //struct dirent *readdir(DIR *dir);
+	
+	// opendir()
+	// renvoie un pointeur NULL si le dossier n a pas ete trouve
+    if (dossier == NULL) { 
+		printf("\nIL y a eu une erreur dans l'ouverture du dossier /joueurs.\n");
+		exit (1);
+    }
+    else {
+		 // readdir()
+		printf("\nLes pseudos des joueurs enregistres sont les suivants :\n");
+		while ((fichier = readdir(dossier)) != NULL)
+				printf("- '%s'\n", fichier->d_name);
+		closedir(dossier);
+	}
 }

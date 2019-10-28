@@ -1,4 +1,9 @@
-#pragma once
+/// @file T2d.h
+#ifndef T2D_H_INCLUDED
+#define T2D_H_INCLUDED
+
+#define NOUVELLE_GRILLE { 0u, 0u, NULL}
+
 
 // La structure T2d représente un tableau
 // de char à 2 dimensions
@@ -11,6 +16,7 @@ struct T2d {
 	unsigned int hauteur;
 	char* grille;
 };
+typedef T2d T2d; 
 
 void init(T2d* , unsigned int largeur,
 			     unsigned int hauteur);
@@ -33,3 +39,6 @@ unsigned int placerJeton(T2d*, char col, char symbole); // retourne la ligne dan
 void annulerCoup(T2d*, char col); // annule le dernier jeton placé dans col.
 char* coupsLegaux(T2d*); // retourne la liste des coups légaux pour un état du jeu
 int evaluerCoup(T2d*, char col, unsigned int lig);
+
+
+#endif // T2D_H_INCLUDED

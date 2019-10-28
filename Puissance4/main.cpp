@@ -1,10 +1,15 @@
-// main.cpp
+/// @file main.cpp
 #include <time.h>
+#include <assert.h>
+#include <string.h>
 #include "unittest.h"
 #include "T2d.h"
-#include "jeu.h"
+#include "partie.h"
 #include "joueur.h"
-#define MAX 20
+
+#define MAX 20 //attention nom a changer
+//attention c est qlq fois utile d avoir des variables constantes mais encore faut il qu on sache a quoi elles correspondent, ici le nom ne donne pas assez d indication et en general dans le main il n y en a pas besoin
+
 int tirage(int min, int max);
 void initSeed();
 void testerT2d();
@@ -22,7 +27,7 @@ int main() {
 	setName(&j2, s2);
 	printf("Bienvenue %s et %s\n", getName(&j1), getName(&j2));*/
 	puts("###### LET'S PLAY ######!");
-	play(&j1, &j2);
+	//play(&j1, &j2);
 	return 0;
 }
 
@@ -30,7 +35,7 @@ void testerT2d() {
 	assertEquals('.', getSymbole(0), "case vide");
 	assertEquals('X', getSymbole(1), "symbole joueur 1");
 	assertEquals('O', getSymbole(2), "symbole joueur 2");
-	T2d t;
+	T2d t = NOUVELLE_GRILLE; //initialisation tous les paramètre à 0 meme la largeur
 	init(&t, 7u, 6u);
 	char s[250];
 	char col;
