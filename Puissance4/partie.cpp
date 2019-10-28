@@ -118,7 +118,7 @@ Partie chargementPartie(char *nomPartie, const char *filepath_parties){
 	//obtention du nom du fichier à partir dulequel charger la struct Joueur
 	char* nomFichier = NULL;
 	//malloc +9pseudo1 +1separateur +9pseudo2 +1separateur +15dateHeure +4typeFichier +1\0
-	nomFichier = (char*)malloc((strlen(filepath_parties) +9+1+9+1+15+4 +1) * sizeof(char));
+	nomFichier = (char*)malloc((strlen(filepath_parties)+NAME_MAX_PARTIE) * sizeof(char));
 	strcpy(nomFichier, filepath_parties) ;
 	strcat(nomFichier, nomPartie) ;
 
@@ -166,14 +166,55 @@ void affichagePartiesDispo(const char *filepath_parties){
 		printf("\nIL y a eu une erreur dans l'ouverture du dossier /parties.\n");
 		exit (1);
     }
+
     else {
 		 // readdir()
 		printf("\nLes parties enregistrees sont les suivantes :\n");
-		while ((fichier = readdir(dossier)) != NULL)
-				printf("- '%s'\n", fichier->d_name);
+		unsigned int rank = 0u ; //rang utile pour choisir le fichier à la suite dans un scanf
+		while ((fichier = readdir(dossier)) != NULL){
+			//strcmp(fichier->d_name,'.') ne marche pas mais
+			if( (strcmp(".", fichier->d_name)!=0) && (strcmp("..", fichier->d_name)!=0) ){
+				++rank;				
+				printf("[%i] - %s \n", rank, fichier->d_name) ;
+			}
+		}
 		closedir(dossier);
 	}
 }
+
+//choixPartieParmiDispo
+//permet de renvoyer le nom d une partie prise à partir d'une liste de partie 
+char choixPartieParmiDispo(unsigned int rang, const char *filepath_parties){
+	char* nomFichier = NULL;
+	nomFichier = (char*)malloc( (NAME_MAX_PARTIE)*sizeof(char) );
+	//dirent.h
+    DIR *dossier = opendir(filepath_parties); // DIR *opendir(const char *dirname);
+	struct dirent *fichier = NULL ; //struct dirent *readdir(DIR *dir);
+	
+	// opendir()
+    if (dossier == NULL) { 
+		printf("\nIL y a eu une erreur dans l'ouverture du dossier /parties.\n");
+		exit (1);
+    }
+
+    else {
+		 // readdir()
+		printf("\nLes parties enregistrees sont les suivantes :\n");
+		unsigned int rank = 0u ;
+		while ((fichier = readdir(dossier)) != NULL){
+			if( (strcmp(".", fichier->d_name)!=0) && (strcmp("..", fichier->d_name)!=0) ){
+				++rank;
+				if (rank==rang){
+					strcpy(nomFichier,fichier->d_name);
+				}			
+			}
+		}
+		closedir(dossier);
+	}
+	return *nomFichier;
+}
+
+
 /*
 void play(joueur* player1, joueur* player2) {
 	jeu j;  //instanciation du jeu

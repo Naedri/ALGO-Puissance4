@@ -7,6 +7,7 @@
 #define TAILLE_DATEHEURE 16
 
 #define FILEPATH_PARTIES "./parties/"
+#define NAME_MAX_PARTIE 40 // longueur max du nom d une partie 9+1+9+1+15+4 +1
 #define NOUVELLE_PARTIE { "", "", "", "", "", "", "", 0u,"", NULL}
 
 #include "T2d.h"
@@ -34,8 +35,8 @@ typedef struct Partie Partie;
 Partie creationPartie(char *joueur1, char *symbole1, char *joueur2, char *symbole2, unsigned int grilleLargeur, unsigned int grilleHauteur);
 void sauvegarderPartie(Partie p, const char *filepath_parties);
 Partie chargementPartie(char *nomPartie,const char *filepath_parties);
-void affichagePartie(char *nomPartie,const char *filepath_parties);
 void affichagePartiesDispo(const char *filepath_parties);
+char choixPartieParmiDispo(unsigned int rang, const char *filepath_parties)
 
 /*vincent
 struct jeu {
