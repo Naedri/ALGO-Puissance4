@@ -36,7 +36,7 @@ Partie creationPartie(char *joueur1, char *symbole1, char *joueur2, char *symbol
 void sauvegarderPartie(Partie p, const char *filepath_parties);
 Partie chargementPartie(char *nomPartie,const char *filepath_parties);
 void affichagePartiesDispo(const char *filepath_parties);
-char choixPartieParmiDispo(unsigned int rang, const char *filepath_parties)
+char choixPartieParmiDispo(unsigned int rang, const char* filepath_parties);
 
 /*vincent
 struct jeu {

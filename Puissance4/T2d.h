@@ -2,7 +2,7 @@
 #ifndef T2D_H_INCLUDED
 #define T2D_H_INCLUDED
 
-#define NOUVELLE_GRILLE { 0u, 0u, NULL}
+#define NOUVELLE_GRILLE { 0u, 0u, NULL }
 
 
 // La structure T2d représente un tableau

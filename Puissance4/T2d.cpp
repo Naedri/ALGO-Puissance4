@@ -5,7 +5,9 @@
 #include <malloc.h>
 
 #include "T2d.h"
-#pragma warning(disable:4996)
+//#pragma warning(disable:4996)
+//#pragma warning(disable:4018) //'<=' : incompatibilité signed / unsigned	Puissance4	/T2d.cpp	135
+
 
 void init(T2d* t, unsigned int largeur, unsigned int hauteur) {
 	t->largeur = largeur;

@@ -3,12 +3,14 @@
 #include <stdio.h> //FILE structure est definie dans stdio.h
 #include <string.h>
 #include <malloc.h>
-#include <dirent.h> //opendir() renvoie un pointeur de type DIR
+#include "dirent.h" //opendir() renvoie un pointeur de type DIR https://codeyarns.com/2014/06/06/how-to-use-dirent-h-with-visual-studio/
 #include <time.h> //nom de la sauvegarde de la partie
 
 #include "partie.h"
 #include "joueur.h"
 #include "T2d.h"
+
+#pragma warning(suppress : 4996) //ouverture de fichier et manipulation de chaine
 
 
 /*attention
