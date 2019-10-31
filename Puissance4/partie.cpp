@@ -329,7 +329,7 @@ Partie menuPartie(Partie p) {
 	int choixChargementP = 0;
 	int choixJouerP = 0;
 
-	affichagePartiesDispo(FILEPATH_JOUEURS);
+	affichagePartiesDispo(FILEPATH_PARTIES);
 	printf("Souhaitez vous : \n");
 	printf("Retourner au Menu Principal : entrez 1.\n");
 	printf("Charger une partie parmi les parties en cours sauvegardees pour la continuer : entrez 2.\n");
@@ -342,20 +342,20 @@ Partie menuPartie(Partie p) {
 	}
 	if (choixChargementP == 2) {
 		unsigned int nbrPartieMAX = 0u;
-		nbrPartieMAX = nombreParties(FILEPATH_JOUEURS); //scan des Parties pour avoir le nombre de Partie max enregistreesnbr
+		nbrPartieMAX = nombreParties(FILEPATH_PARTIES); //scan des Parties pour avoir le nombre de Partie max enregistreesnbr
 		unsigned int nomPartieXID = 0u;
 		nomPartieXID = choixPartie(nbrPartieMAX); //numero de la Partie choisi par l user obtenu
 
 		char nomPartie[TAILLE_ID] = "";
-		getNomPartieSelonID(nomPartie, nomPartieXID, FILEPATH_JOUEURS);
+		getNomPartieSelonID(nomPartie, nomPartieXID, FILEPATH_PARTIES);
 
-		p = chargementPartie(nomPartie, FILEPATH_JOUEURS); //chargement de la Partie x
+		p = chargementPartie(nomPartie, FILEPATH_PARTIES); //chargement de la Partie x
 		choixChargementP = 1;
 	}
 
 	return p;
 }
-//if (partie.grille != NULL){ //a faire apres
+//if (partie.grilleChar != NULL){ //a faire apres
 //	play(p)
 	////// pas forcement cela
 	////Joueur j1 = NOUVEAU_JOUEUR;
