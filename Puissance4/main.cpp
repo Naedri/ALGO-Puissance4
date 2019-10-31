@@ -35,11 +35,17 @@ void testerT2d() {
 	assertEquals('.', getSymbole(0), "case vide");
 	assertEquals('X', getSymbole(1), "symbole joueur 1");
 	assertEquals('O', getSymbole(2), "symbole joueur 2");
-	T2d t = NOUVELLE_GRILLE; //initialisation tous les paramètre à 0 meme la largeur
+	T2d t = NOUVELLE_TABLE; //initialisation tous les paramètre à 0 meme la largeur
 	init(&t, 7u, 6u);
 	char s[250];
 	char col;
 	unsigned int ligne;
+	
+	//char pseudo_joueur1[TAILLE_ID] = "";
+	//char pseudo_joueur2[TAILLE_ID] = "";
+	//scanf_s("quel le nom du premier joueur ? %s", &pseudo_joueur1);
+	//scanf_s("quel le nom du deuxieme joueur ? %s", &pseudo_joueur2);
+
 	for (int i = 0; i < 46; ++i) {	//version tirage aléatoire pour tester de nombreuses parties
 		do
 			col = tirage('a', 'g');
@@ -47,6 +53,7 @@ void testerT2d() {
 		ligne = placerJeton(&t, col, getSymbole((i + 1) % 2 + 1));
 		toString(&t, s);
 		printf("%s", s);
+		//printf("%s  %c  %s", pseudo_joueur1, getSymbole((i + 1) % 2 + 1)), pseudo_joueur2);
 		if (estVictoire(&t, col, ligne) == true) {
 			printf("gg\n");
 			break;

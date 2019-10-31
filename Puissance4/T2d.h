@@ -2,8 +2,8 @@
 #ifndef T2D_H_INCLUDED
 #define T2D_H_INCLUDED
 
-#define NOUVELLE_GRILLE { 0u, 0u, NULL }
-
+#define NOUVELLE_TABLE { 0u, 0u, NULL }
+#define TAILLE_MAX_GRILLE 144 //12*12
 
 // La structure T2d représente un tableau
 // de char à 2 dimensions
@@ -16,10 +16,10 @@ struct T2d {
 	unsigned int hauteur;
 	char* grille;
 };
-typedef T2d T2d; 
+typedef T2d T2d;
 
-void init(T2d* , unsigned int largeur,
-			     unsigned int hauteur);
+void init(T2d* , unsigned int largeur, unsigned int hauteur);
+
 unsigned int getLargeur(const T2d*);
 unsigned int getHauteur(const T2d*);
 char getSymbole(unsigned int);

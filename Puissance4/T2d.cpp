@@ -4,15 +4,17 @@
 #include <assert.h>
 #include <malloc.h>
 
+#include "commun.h"
 #include "T2d.h"
-//#pragma warning(disable:4996)
+#pragma warning(disable:4996)
 //#pragma warning(disable:4018) //'<=' : incompatibilité signed / unsigned	Puissance4	/T2d.cpp	135
 
 
 void init(T2d* t, unsigned int largeur, unsigned int hauteur) {
+	assert((hauteur * largeur) <= (TAILLE_MAX_GRILLE));
 	t->largeur = largeur;
 	t->hauteur = hauteur;
-	t->grille = (char*)malloc(largeur * hauteur);
+	t->grille = (char*)malloc((largeur * hauteur)); //+1 n est pas necessaire car dans le for il y a i <  et non i <=
 	assert(t->grille != NULL);
 	for (unsigned int i = 0; i < largeur * hauteur; ++i)
 		t->grille[i] = '.';
@@ -95,10 +97,7 @@ bool estVictoire(const T2d* t, char col, unsigned int lig) {
 		return true;
 	return false;
 }
-int viderBuffer() {
-	while (getchar() != '\n');
-	return 1;
-}
+
 bool estRemplie(T2d* t, char col) {
 	return get(t, col, getHauteur(t)) != '.';
 }

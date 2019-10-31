@@ -2,41 +2,44 @@
 #ifndef PARTIE_H_INCLUDED
 #define PARTIE_H_INCLUDED
 
+#include <stdlib.h> //NULL
+
 #define TAILLE_ID 10
-#define TAILLE_SYMBOLE 2
 #define TAILLE_DATEHEURE 16
 
 #define FILEPATH_PARTIES "./parties/"
-#define NAME_MAX_PARTIE 40 // longueur max du nom d une partie 9+1+9+1+15+4 +1
-#define NOUVELLE_PARTIE { "", "", "", "", "", "", "", 0u,"", NULL}
-
-#include "T2d.h"
-#include "joueur.h"
+#define NAME_MAX_PARTIE 39 // longueur max du nom d une partie 9+1+9+1+15+4 	//malloc +9pseudo1 +1separateur +9pseudo2 +1separateur +15dateHeure +4typeFichier +1\0
+#define NOUVELLE_PARTIE { "", "", "", "", "", 0u, 0u, 0u, 0u, 0u, 0u, NULL }
 
 //adrien
 struct Partie {
     char joueur1[TAILLE_ID] ; //pseudo du joueur1
     char joueur2[TAILLE_ID] ; //pseudo du joueur2
-    char symbole1[TAILLE_SYMBOLE] ; //symbole du joueur1
-    char symbole2[TAILLE_SYMBOLE] ; //symbole du joueur2
-    
-    char joueurActif[TAILLE_ID] ; //pseudo du joueur qui doit inserer son jeton pour ce tour
-    char symboleActif[TAILLE_SYMBOLE]; //symbole du joueur qui doit inserer son jeton pour ce tour
-
-    char joueurInitial[TAILLE_ID] ;  //pseudo du joueur qui a été le premier joueur a mettre un jeton
-    unsigned int nbrTour;
-    char dateCreation[TAILLE_DATEHEURE]; //necessaire pour sa sauvegarde YYYYMMDD-HHMMSS
-
-    T2d *grille;
+	char joueurActif[TAILLE_ID]; //pseudo du joueur qui doit inserer son jeton pour ce tour (cad joueur qui n est pas le dernier joueur a avoir inserer de jeton)
+	char joueurInitial[TAILLE_ID];  //pseudo du joueur qui a été le premier joueur a mettre un jeton
+	char dateCreation[TAILLE_DATEHEURE]; //necessaire pour sa sauvegarde YYYYMMDD-HHMMSS
+	unsigned int symbole1 ; //symbole du joueur1
+	unsigned int symbole2 ; //symbole du joueur2
+	unsigned int symboleActif; //symbole du joueur qui doit inserer son jeton pour ce tour
+    unsigned int nbrTour; // si pair  : joueurActif est le joueurPREMIER ; si impair : joueurActif est le joueurSECOND
+	unsigned int grilleLargeur; //T2d structure
+	unsigned int grilleHauteur;
+	char *grilleChar; //on ne sauvegarde pas T2d* car elle contient elle même des pointeurs
 };
-
 typedef struct Partie Partie;
 
-Partie creationPartie(char *joueur1, char *symbole1, char *joueur2, char *symbole2, unsigned int grilleLargeur, unsigned int grilleHauteur);
-void sauvegarderPartie(Partie p, const char *filepath_parties);
-Partie chargementPartie(char *nomPartie,const char *filepath_parties);
-void affichagePartiesDispo(const char *filepath_parties);
-char choixPartieParmiDispo(unsigned int rang, const char* filepath_parties);
+void creationPartie(Partie* p, char* joueur1, unsigned int symbole1, char* joueur2, unsigned int symbole2,
+	char* joueurActif, unsigned int symboleActif,
+	char* joueurInitial, unsigned int nbrTour,
+	unsigned int grilleLargeur, unsigned int grilleHauteur, char* grilleChar);
+void sauvegarderPartie(Partie p, const char* filepath_joueurs);
+Partie chargementPartie(char* nomPartie, const char* filepath_parties);
+void affichagePartiesDispo(const char* filepath_parties);
+unsigned int nombreParties(const char* filepath_parties);
+int choixPartie(unsigned int maxPartie);
+void getNomPartieSelonID(char* chainePourNomPartie, unsigned int id, const char* filepath_parties);
+
+Partie menuPartie(Partie p);
 
 /*vincent
 struct jeu {
