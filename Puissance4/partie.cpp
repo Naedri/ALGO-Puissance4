@@ -350,7 +350,7 @@ Partie menuPartie(Partie p) {
 		getNomPartieSelonID(nomPartie, nomPartieXID, FILEPATH_PARTIES);
 
 		p = chargementPartie(nomPartie, FILEPATH_PARTIES); //chargement de la Partie x
-		choixChargementP = 1;
+		printf("Preparez vous.\n");
 	}
 
 	return p;

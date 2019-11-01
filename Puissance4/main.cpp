@@ -28,18 +28,24 @@ int main() {
 	printf("Bienvenue %s et %s\n", getName(&j1), getName(&j2));*/
 	//puts("###### LET'S PLAY ######!");
 	//play(&j1, &j2);
-	
+	menuProfil();
+
 	Partie partie = NOUVELLE_PARTIE;
 	partie = menuPartie(partie); 
-	if (partie.grilleChar != NULL){ //a faire apres
+	if (partie.grilleChar != NULL) { //a faire apres
 	//play(p)
-	
+
 	//// pas forcement cela
 	//joueur j1 = nouveau_joueur;
 	//joueur j2 = nouveau_joueur;
 	//j1 = chargementjoueur(p->joueur1,filepath_joueurs);
 	//j2 = chargementjoueur(p->joueur2,filepath_joueurs);
 	//play(&j1, &j2);
+	}
+	int choixMenu = 0 ;
+	if (choixMenu == 4) {
+			menuIA()
+	}
 }
 	
 	return 0;
@@ -160,4 +166,12 @@ void  initSeed() {
 int tirage(int min, int max) {
 	initSeed();
 	return (rand() % (max - min + 1)) + min;
+}
+
+int menuIA() {
+	initSeed();
+	joueur j;
+	setName(&j, "HUMAN");
+	playIA(&j);
+	return 0;
 }
