@@ -44,7 +44,7 @@ void accueilJeu() {
 	printf("\n\n\n ####### PUISSANCE 4 ####### \n\n");
 	printf("\n\n\n******** Menu principal ********\n\n");
 	printf("Le jeu Puissance 4 est un jeu qui se joue a deux.\nDe nombreux joueurs l ont deja essaye !\n");
-	printf("Tapez < 1 > : Pour connaître les statisques des joueurs disponibles.\n");
+	printf("Tapez < 1 > : Pour connaitre les statisques des joueurs disponibles.\n");
 	printf("Tapez < 2 > : Si vous souhaitez creer un nouveau profil de joueur.\n");
 	printf("Tapez < 3 > : Pour debuter une partie. Les nouveaux joueurs doivent au prealable creer un profil.\n");
 	printf("Tapez < 4 > : Pour reprendre une partie en cours.\n");

@@ -57,7 +57,7 @@ void toString(const T2d* t, char* s) {
 	for (unsigned int lig = getHauteur(t); lig >= 1; --lig) {
 		d += sprintf(s + d, "%i ", lig);
 		for (char col = 'a'; col <= 'a'+getLargeur(t)-1; ++col)
-			d += sprintf(s + d, "%c", get(t, col, lig));
+			d += sprintf(s + d, "%c ", get(t, col, lig));
 		d += sprintf(s + d, "\n");
 	}
 	d += sprintf(s + d, "  ");

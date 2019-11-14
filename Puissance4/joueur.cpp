@@ -487,7 +487,7 @@ void menuCreationProfil() {
 	} while (prenom != "" && nom != "" && pseudo != "" && redondanceProfil != false);
 
 	//affichage des details du profil avec une phrase
-	printf("\n-%s s'appelle %s %s, il a joue %i parties, son taux de victoire est de %f.\n ",
+	printf("\n-%s s'appelle %s %s, il/elle a joue %i parties, son taux de victoire est de %f.\n ",
 		j.pseudo, j.prenom, j.nom, j.partiesJouees, j.partiesRatio);
 	sauvegarderJoueur(j, FILEPATH_JOUEURS);
 	
