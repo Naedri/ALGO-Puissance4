@@ -3,7 +3,8 @@ IUT Paris Descartes - 2019 - Enseignant : ZIANE Mikal.
 
 ## Algorithme et Programmation en C.
 
-Dans le cadre du cours de Algorithme et Programmation en C, Mikal Ziane a proposé de développer un jeu : Le puissance 4.
+Dans le cadre du cours de Algorithme et Programmation en C,   
+Mikal Ziane a proposé de développer un jeu : Le puissance 4.
 
 ## Auteurs
 
@@ -12,7 +13,8 @@ ESCOFFIER Vincent : <alainvincentesc@gmail.com>
 JALLAIS Adrien : <adrien.jallais@protonmail.com>  
 
 ## Description
-Jeux selon une géometrie variable
+Le Puissance4 est un jeux à géometrie variable.  
+Une présentation du jeu est consultable au lien suivant : <https://fr.wikipedia.org/wiki/Puissance_4> .
 
 ## Portabilité
 Nécesitte un compilateur C.
