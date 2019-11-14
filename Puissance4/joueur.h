@@ -18,7 +18,8 @@ struct Joueur{
 
 typedef struct Joueur Joueur;
 
-void creationJoueur(Joueur* j, char *pseudo, char *nom, char *prenom, const char *filepath_joueurs);
+
+void creationJoueur(Joueur* j, char *pseudo, char *nom, char *prenom, const char *filepath_joueurs, bool* redondance);
 int nombreLignesTable(char *filePathName);
 void sauvegarderJoueur(Joueur j, const char* filepath_joueurs);
 Joueur chargementJoueur(char *pseudo,const char *filepath_joueurs);
@@ -26,11 +27,11 @@ void affichageJoueur(char *pseudo, const char *filepath_joueurs);
 void matchJoueur(Joueur* j, bool partieNulle, bool victoire);
 char* getPseudo(Joueur* j);
 
-void affichageJoueursDispo(const char *filepath_joueurs);
-unsigned int nombreProfils(const char* filepath_joueurs);
-int choixProfil(unsigned int maxProfil);
-void getPseudoSelonID(char* chainePourPseudo, unsigned int id, const char* filepath_joueurs);
+bool affichageJoueursDispo(const char *filepath_joueurs);
+int nombreProfils(const char* filepath_joueurs);
+int choixProfil(int maxProfil);
+void getPseudoSelonID(char* chainePourPseudo, int id, const char* filepath_joueurs);
 
-void menuProfil();
-
+void menuProfil(); //affiche profilDispo
+void menuCreationProfil(); //creer un profil
 #endif // JOUEUR_H_INCLUDED

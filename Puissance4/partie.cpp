@@ -39,7 +39,7 @@ void creationPartie(Partie* p,char *joueur1, unsigned int symbole1, char *joueur
 	assert(p != NULL);
 	assert(*joueur1 != NULL && *joueur2 != NULL && *joueurActif != NULL && *joueurInitial != NULL);
 	assert(grilleLargeur != 0 && grilleHauteur != 0 && *grilleChar != NULL);
-	assert(symbole1 < 3 && symbole2 < 3 && symboleActif < 3);
+	assert(symbole1 < 3u && symbole2 < 3u && symboleActif < 3u);
 	assert( (grilleLargeur * grilleHauteur) <= TAILLE_MAX_GRILLE);
 
 	//initialisation de la struct Partie
@@ -93,7 +93,7 @@ void sauvegarderPartie(Partie p, const char *filepath_joueurs){
 	assert(nomFichier != NULL);
 
 	//concatenation pour nom Fichier
-	strcat(nomFichier, filepath_joueurs) ;
+	strcpy(nomFichier, filepath_joueurs) ;
 	strcat(nomFichier, p.joueur1) ;
 	strcat(nomFichier, sep) ;
 	strcat(nomFichier, p.joueur2) ;
@@ -111,16 +111,17 @@ void sauvegarderPartie(Partie p, const char *filepath_joueurs){
 
     else {
         // ecriture de la structure Joueur dans le fichier
-        int count = fwrite (&p, sizeof(Partie), 1, fichier);
+		int count = 0;
+		count = fwrite (&p, sizeof(Partie), 1, fichier);
 		
 		// if(fwrite != 0){
         if(count >= 1){
-            printf("La partie a été sauvegardee correctement sous le nom suivant : \n");
-            printf("%s",nomFichier);
+            printf("La partie a ete sauvegardee correctement sous le nom suivant : \n");
+            printf("%s\n",nomFichier);
         }
         else{
             fprintf(stderr,"\nIl y a eu une erreur dans l'ecriture du fichier.\n");
-			printf("%s", nomFichier);
+			printf("%s\n", nomFichier);
         }
     }
 
@@ -151,7 +152,7 @@ Partie chargementPartie(char *nomPartie, const char *filepath_parties){
 	assert(nomFichier != NULL);
 
 	//obtention du nom du fichier à partir dulequel charger la struct Partie
-	strcat(nomFichier, filepath_parties);
+	strcpy(nomFichier, filepath_parties);
 	strcat(nomFichier, nomPartie);
 	strcat(nomFichier, typeFichier);
 
@@ -189,7 +190,7 @@ Partie chargementPartie(char *nomPartie, const char *filepath_parties){
     // unsigned char  d_type;      /* type of file; not supported
     // char           d_name[256]; /* filename */
 // };
-void affichagePartiesDispo(const char *filepath_parties){
+bool affichagePartiesDispo(const char *filepath_parties){
 	//assert
 	assert(filepath_parties != NULL);
 	//initialisation
@@ -220,9 +221,14 @@ void affichagePartiesDispo(const char *filepath_parties){
 		{
 			printf("*\n");
 			printf("Vous n avez pas encore creer de partie veuillez en creer une.\n");
+			printf("Vous allez etre redirige vers le menu principal.\n");
 			printf("*\n");
+			closedir(dossier);
+			return false;
 		}
-		closedir(dossier);
+		else {
+			return true;
+		}
 	}
 }
 
@@ -230,11 +236,11 @@ void affichagePartiesDispo(const char *filepath_parties){
 //nombreParties
 //affiche le nombre de fichiers ici partie présente dans un dossier donné
 // peut être utilisée à la suite par la fonction choixPartie pour limiter le choix de l utilisateur
-unsigned int nombreParties(const char* filepath_parties) {
+int nombreParties(const char* filepath_parties) {
 	//assert
 	assert(*filepath_parties != NULL);
 	//initialisation
-	unsigned int nbrFichier = 0u;
+	int nbrFichier = 0;
 
 	//dirent.h
 	DIR* dossier = opendir(filepath_parties); // DIR *opendir(const char *dirname);
@@ -262,30 +268,36 @@ unsigned int nombreParties(const char* filepath_parties) {
 //permet a l utilisateur de rentrer un nombre correspondant à l ID de partie
 //securise le choix des parties
 //maxPartie doit être obtenu nombreParties
-int choixPartie(unsigned int maxPartie) {
+int choixPartie(int maxPartie) {
 	//assert
-	assert(maxPartie != 0);
+	assert(maxPartie > 0);
+
 	//initialisation
-	unsigned int choixPartie = 0u;
-	char c = NULL; //verif du dernier caractere est un retour chariot.
-	printf("Entrez le numero de la partie que vous souhaitez continuer.\n");
-	while ((((scanf("%i%c", &choixPartie, &c)) != 2 || c != '\n') && viderBuffer()) || choixPartie <= maxPartie) {
-		printf("Veuillez entrez un numero valide.");
+	int choix = 0;
+	int nbrCaraEntres = 0;
+
+	//while ((( (scanf("%d%c", &choixProfil, &c)) != 2 || c != '\n') && viderBuffer()) || choixProfil <= maxProfil) {
+	//	printf("Veuillez entrez un numero valide.");
+	//}
+	while (choix <= 0 || nbrCaraEntres > 3 || choix > maxPartie)
+	{
+		printf("Veuillez entrer le numero de la partie que vous souhaitez continuer.\n");
+		nbrCaraEntres = scanf_s("%d", &choix);
 	}
-	return choixPartie;
+	printf("Le numero selectionne est %d", choix);
+	return choix;
 }
 
 //getNomPartieSelonID
 //necessite l'initiation au préalable de chainePourNomPartie
 //mettera le nomPartie associe a l id indique dans la chainePourNomPartie
-void getNomPartieSelonID(char* chainePourNomPartie, unsigned int id, const char* filepath_parties) {
+void getNomPartieSelonID(char* chainePourNomPartie, int id, const char* filepath_parties) {
 	//assert
 	assert(*filepath_parties != NULL);
-	assert(id != 0u);
+	assert(id >0);
 
 	//initialisation
-	const unsigned int tailleAvecTyp = (TAILLE_ID + 4); //strlen(".txt") pour nomPartie.txt
-	char nomPartieAvecTyp[tailleAvecTyp] = "";
+	char nomPartieAvecTyp[NAME_MAX_PARTIE] = "";
 	unsigned int nbrFichier = 0u;
 
 	//dirent.h
@@ -299,8 +311,7 @@ void getNomPartieSelonID(char* chainePourNomPartie, unsigned int id, const char*
 		exit(1);
 	}
 	else {
-		// readdir()
-		printf("\nLes nomParties des parties enregistres sont les suivants :\n");
+		// readdir() //pourrais etre aameliore en faisant while nbrFichier != id
 		while ((fichier = readdir(dossier)) != NULL) {
 			if ((strcmp(".", fichier->d_name) != 0) && (strcmp("..", fichier->d_name) != 0)) {
 				++nbrFichier;
@@ -318,7 +329,7 @@ void getNomPartieSelonID(char* chainePourNomPartie, unsigned int id, const char*
 }
 
 // menuPartie
-// permet d'afficher les nomParties disponibles, 
+// permet d'afficher les nomParties disponibles, et modifier p pour y mettre une partie chargee si voulu par l utilisateur
 // attention seules les parties non finies peuvent être sauvegardees
 // donc pas besoin de verifier si la partie est terminee ou non
 // d'y selectionner et charger pour ensuite continuer la partie
@@ -326,34 +337,49 @@ void getNomPartieSelonID(char* chainePourNomPartie, unsigned int id, const char*
 // Partie partie = NOUVELLE_PARTIE; //a faire avant
 // partie = menuPartie(partie); //a faire avant
 Partie menuPartie(Partie p) {
-	int choixChargementP = 0;
-	int choixJouerP = 0;
-
-	affichagePartiesDispo(FILEPATH_PARTIES);
-	printf("Souhaitez vous : \n");
-	printf("Retourner au Menu Principal : entrez 1.\n");
-	printf("Charger une partie parmi les parties en cours sauvegardees pour la continuer : entrez 2.\n");
-	char c = NULL; //verif du dernier caractere est un retour chariot.
-	while ((((scanf("%i%c", &choixChargementP, &c)) != 2 || c != '\n') && viderBuffer()) || choixChargementP != 1 || choixChargementP != 2) {
-		printf("Veuillez entrez un numero valide.\n");
+	bool partieDispo = false;
+	partieDispo = affichagePartiesDispo(FILEPATH_PARTIES);
+	if (partieDispo == false) {
+		return p;
 	}
-	if (choixChargementP == 1) {
-		printf("Retour au Menu Principal.\n");
+	if (partieDispo == true) {
+		printf("Souhaitez vous : \n");
+		printf("Tapez < 1 > : Pour retourner au Menu Principal.\n");
+		printf("Tapez < 2 > : Pour charger une partie parmi les parties en cours sauvegardees pour la continuer.\n");
+
+		//initialisation
+		int choixChargementP = 0;
+		int nbrCaraEntres = 0;
+
+		//while ((( (scanf("%d%c", &choixProfil, &c)) != 2 || c != '\n') && viderBuffer()) || choixProfil <= maxProfil) {
+		//	printf("Veuillez entrez un numero valide.");
+		//}
+		while (choixChargementP <= 0 || nbrCaraEntres > 3 || choixChargementP > 2)
+		{
+			printf("Veuillez entrer un numero valide.\n");
+			nbrCaraEntres = scanf_s("%d", &choixChargementP);
+		}
+
+
+		if (choixChargementP == 1) {
+			printf("Retour au Menu Principal.\n");
+		}
+		if (choixChargementP == 2) {
+			int nbrPartieMAX = 0;
+			nbrPartieMAX = nombreParties(FILEPATH_PARTIES); //scan des Parties pour avoir le nombre de Partie max enregistreesnbr
+			int nomPartieXID = 0;
+			nomPartieXID = choixPartie(nbrPartieMAX); //numero de la Partie choisi par l user obtenu
+
+			char nomPartie[NAME_MAX_PARTIE];
+			getNomPartieSelonID(nomPartie, nomPartieXID, FILEPATH_PARTIES);//copie le nom de la partie dans nomPartie à partir de l ID
+
+			p = chargementPartie(nomPartie, FILEPATH_PARTIES); //chargement de la Partie x
+			printf("\nLa date de la partie est %s.\n", p.dateCreation);
+			printf("Preparez vous.\n");
+		}
+
+		return p;
 	}
-	if (choixChargementP == 2) {
-		unsigned int nbrPartieMAX = 0u;
-		nbrPartieMAX = nombreParties(FILEPATH_PARTIES); //scan des Parties pour avoir le nombre de Partie max enregistreesnbr
-		unsigned int nomPartieXID = 0u;
-		nomPartieXID = choixPartie(nbrPartieMAX); //numero de la Partie choisi par l user obtenu
-
-		char nomPartie[TAILLE_ID] = "";
-		getNomPartieSelonID(nomPartie, nomPartieXID, FILEPATH_PARTIES);
-
-		p = chargementPartie(nomPartie, FILEPATH_PARTIES); //chargement de la Partie x
-		printf("Preparez vous.\n");
-	}
-
-	return p;
 }
 //if (partie.grilleChar != NULL){ //a faire apres
 //	play(p)

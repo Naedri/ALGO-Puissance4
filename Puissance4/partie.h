@@ -16,7 +16,7 @@ struct Partie {
     char joueur1[TAILLE_ID] ; //pseudo du joueur1
     char joueur2[TAILLE_ID] ; //pseudo du joueur2
 	char joueurActif[TAILLE_ID]; //pseudo du joueur qui doit inserer son jeton pour ce tour (cad joueur qui n est pas le dernier joueur a avoir inserer de jeton)
-	char joueurInitial[TAILLE_ID];  //pseudo du joueur qui a été le premier joueur a mettre un jeton
+	char joueurInitial[TAILLE_ID];  //pseudo du joueur qui a ete le premier joueur a mettre un jeton
 	char dateCreation[TAILLE_DATEHEURE]; //necessaire pour sa sauvegarde YYYYMMDD-HHMMSS
 	unsigned int symbole1 ; //symbole du joueur1
 	unsigned int symbole2 ; //symbole du joueur2
@@ -34,10 +34,10 @@ void creationPartie(Partie* p, char* joueur1, unsigned int symbole1, char* joueu
 	unsigned int grilleLargeur, unsigned int grilleHauteur, char* grilleChar);
 void sauvegarderPartie(Partie p, const char* filepath_joueurs);
 Partie chargementPartie(char* nomPartie, const char* filepath_parties);
-void affichagePartiesDispo(const char* filepath_parties);
-unsigned int nombreParties(const char* filepath_parties);
-int choixPartie(unsigned int maxPartie);
-void getNomPartieSelonID(char* chainePourNomPartie, unsigned int id, const char* filepath_parties);
+bool affichagePartiesDispo(const char* filepath_parties);
+int nombreParties(const char* filepath_parties);
+int choixPartie(int maxPartie);
+void getNomPartieSelonID(char* chainePourNomPartie, int id, const char* filepath_parties);
 
 Partie menuPartie(Partie p);
 

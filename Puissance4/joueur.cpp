@@ -7,6 +7,7 @@
 
 #include "commun.h"
 #include "joueur.h"
+#include "menu.h"
 
 //ubuntu
 /*
@@ -29,45 +30,53 @@ le fichier contenant les profils de chaque joueurs est appelé par leur pseudo
 //creationJoueur
 //permet de verifier si le pseudo est déjà pris dans le dossier accessible au chemin filepath_joueurs cad '/joueurs/'
 //permet de créer une variable Joueur avec le pseudo, nom et prénom
-//initialise les statistiques des parties
 //attention la sauvegade du joueur dans un fichier doit être toutefois realisee avec sauvegarderJoueur
-void creationJoueur(Joueur* j, char *pseudo, char *nom, char *prenom, const char *filepath_joueurs){
+void creationJoueur(Joueur* j, char *pseudo, char *nom, char *prenom, const char *filepath_joueurs, bool *redondance){
 	//assert
 	assert(j != NULL);
+	assert(*redondance != false);
 	assert(*pseudo != NULL && *nom != NULL && *prenom != NULL && *filepath_joueurs != NULL);
 	//initialisation
 	char typeFichier[] = ".txt";
 	char* nomFichier = NULL;
 	
 	//malloc
-	nomFichier = (char*)malloc((strlen(filepath_joueurs) + strlen(pseudo) + strlen(typeFichier) +1 ) * sizeof(char));
+	nomFichier = (char*)malloc((strlen(pseudo) + strlen(typeFichier) +1 ) * sizeof(char));
 	if (nomFichier == NULL)
 	{
-		printf("Probleme d'allocation de la memoire pour la creationJoueur");
+		printf("\nProbleme d'allocation de la memoire pour la creationJoueur\n");
 		exit(1);
 	}
 	assert(nomFichier != NULL);
 
 	//obtention du nom du fichier dans lequel sauvegarder la struct Joueur
-	strcat(nomFichier, filepath_joueurs) ;
-	strcat(nomFichier, pseudo) ;
+	strcpy(nomFichier, pseudo) ;
 	strcat(nomFichier, typeFichier) ;
 
 	//verifier si pseudo deja pris
+	/*
 	FILE *fichier = NULL;
 	fichier = fopen(nomFichier, "r"); //"r": lecture seule n est pas creer si le fichier n existe pas
 
 	//le fichier existe i.e le pseudo est deja pris
+
 	if (fichier != NULL) {
-		fprintf(stderr, "\nIL y a deja un Joueur qui porte le meme nom.\n");
-		fclose(fichier); //on a ferme le fichier car on a du l ouvrir
-		free(nomFichier);
-		exit (1);
+	fprintf(stderr, "\nIL y a deja un Joueur qui porte le meme pseudo.\n");
+	fclose(fichier); //on a ferme le fichier car on a du l ouvrir
+	free(nomFichier);
+	redondance = true;
+	exit (1);
 	}
+	*/
+	*redondance = fichierExiste(nomFichier, filepath_joueurs);
+
+	if (*redondance == true){
+		printf("\nIL y a deja un Joueur qui porte le meme pseudo.\n");
+	}
+
 	//le fichier n existe pas cad le pseudo n est pas pris
     //definition des donnees d identites
-	else {
-		free(nomFichier);
+	if (*redondance == false) {
 		//initialisation de la struct Joueur
 		strcpy(j->pseudo , pseudo);
 		strcpy(j->nom , nom);
@@ -114,6 +123,7 @@ int nombreLignesTable(char *filePathName){
 void sauvegarderJoueur(Joueur j, const char *filepath_joueurs){
 	//assert
 	assert(j.pseudo != "" && *filepath_joueurs != NULL);
+	
 	//initilisation
 	char* nomFichier = NULL;
 	char typeFichier[] = ".txt";
@@ -121,7 +131,7 @@ void sauvegarderJoueur(Joueur j, const char *filepath_joueurs){
 	nomFichier = (char*)malloc((strlen(filepath_joueurs) + strlen(j.pseudo) + strlen(typeFichier) +1) * sizeof(char));
 	if (nomFichier == NULL)
 	{
-		printf("Probleme d'allocation de la memoire pour la sauvegardeJoueur");
+		printf("\nProbleme d'allocation de la memoire pour la sauvegardeJoueur.\n");
 		exit(1);
 	}
 	assert(nomFichier != NULL);
@@ -145,8 +155,8 @@ void sauvegarderJoueur(Joueur j, const char *filepath_joueurs){
 		
 		// if(fwrite != 0){
         if(count >= 1){
-            printf("Le profil du joueur a été sauvegarde correctement sous le nom suivant.\n");
-			printf("%s", nomFichier);
+            printf("\nLe profil du joueur a ete sauvegarde correctement sous le nom suivant.");
+			printf("\n%s", nomFichier);
         }
         else{
             fprintf(stderr,"\nIl y a eu une erreur dans l'ecriture du fichier.\n");
@@ -174,13 +184,13 @@ Joueur chargementJoueur(char *pseudo,const char *filepath_joueurs){
 	nomFichier = (char*)malloc((strlen(filepath_joueurs) + strlen(pseudo) + strlen(typeFichier) +1) * sizeof(char));
 	if (nomFichier == NULL)
 	{
-		printf("Probleme d'allocation de la memoire pour le chargementJoueur");
+		printf("\nProbleme d'allocation de la memoire pour le chargementJoueur.\n");
 		exit(1);
 	}
 	assert(nomFichier != NULL);
 
 	//obtention du nom du fichier à partir dulequel charger la struct Joueur
-	strcat(nomFichier, filepath_joueurs) ;
+	strcpy(nomFichier, filepath_joueurs) ;
 	strcat(nomFichier, pseudo) ;
 	strcat(nomFichier, typeFichier) ;
 
@@ -218,7 +228,7 @@ void affichageJoueur(char *pseudo, const char *filepath_joueurs){
 	}
 
 	//affichage des details du profil avec une phrase
-	printf("-%s s'appelle %s %s, il a joue %i parties, son taux de victoire est de %f.\n ",
+	printf("\n-%s s'appelle %s %s, il a joue %i parties, son taux de victoire est de %f.\n ",
 	j.pseudo, j.prenom, j.nom, j.partiesJouees, j.partiesRatio);
 }
 
@@ -270,7 +280,7 @@ char* getPseudo(Joueur* j){
     // unsigned char  d_type;      /* type of file; not supported
     // char           d_name[256]; /* filename */
 // };
-void affichageJoueursDispo(const char *filepath_joueurs){
+bool affichageJoueursDispo(const char *filepath_joueurs){
 	//assert
 	assert(*filepath_joueurs != NULL);
 	//initialisation
@@ -299,20 +309,26 @@ void affichageJoueursDispo(const char *filepath_joueurs){
 		{
 			printf("*\n");
 			printf("Vous n avez pas encore creer de joueur veuillez en creer un.\n");
+			printf("Vous allez etre redirige vers le menu principal.\n");
 			printf("*\n");
+			closedir(dossier);
+			return false;
 		}
-		closedir(dossier);
+		else {
+			closedir(dossier);
+			return true;
+		}
 	}
 }
 
 //nombreProfils
 //affiche le nombre de fichiers ici profil présent dans un dossier donné
 // peut être utilisée à la suite par la fonction choixProfil pour limiter le choix de l utilisateur
-unsigned int nombreProfils(const char* filepath_joueurs){
+int nombreProfils(const char* filepath_joueurs){
 	//assert
 	assert( *filepath_joueurs != NULL);
 	//initialisation
-	unsigned int nbrFichier = 0u ;
+	int nbrFichier = 0 ;
 
 	//dirent.h
     DIR *dossier = opendir(filepath_joueurs); // DIR *opendir(const char *dirname);
@@ -340,31 +356,39 @@ unsigned int nombreProfils(const char* filepath_joueurs){
 //permet a l utilisateur de rentrer un nombre correspondant à l ID de profil
 //securise le choix des profils de joueurs
 //maxProfil doit être obtenu nombreProfils
-int choixProfil(unsigned int maxProfil) {
+int choixProfil(int maxProfil) {
 	//assert
-	assert(maxProfil != 0);
+	assert(maxProfil > 0);
+
 	//initialisation
-	unsigned int choixProfil = 0u;
-	char c =  NULL ; //verif du dernier caractere est un retour chariot.
-	printf("Entrez le numero du profil que vous souhaitez selectionner pour affichage de ses details.\n");
-	while ((( (scanf("%i%c", &choixProfil, &c)) != 2 || c != '\n') && viderBuffer()) || choixProfil <= maxProfil) {
-		printf("Veuillez entrez un numero valide.");
+	int choix = 0;
+	char c ; //verif du dernier caractere est un retour chariot.
+	int nbrCaraEntres = 0;
+
+	//while ((( (scanf("%d%c", &choixProfil, &c)) != 2 || c != '\n') && viderBuffer()) || choixProfil <= maxProfil) {
+	//	printf("Veuillez entrez un numero valide.");
+	//}
+	while (choix <= 0 || nbrCaraEntres > 3 || c != '\n' || choix > maxProfil)
+	{
+		printf("Veuillez entrer le numero du profil que vous souhaitez selectionner pour affichage de ses details.\n");
+		nbrCaraEntres = scanf("%d%c", &choix, &c);
 	}
-	return choixProfil;
+	printf("Le numero selectionne est %d", choix);
+	return choix;
 }
 
 //getPseudoSelonID
 //necessite l'initiation au préalable de chainePourPseudo
 //mettera le pseudo associe a l id indique dans la chainePourPseudo
-void getPseudoSelonID(char * chainePourPseudo, unsigned int id, const char* filepath_joueurs) {
+void getPseudoSelonID(char * chainePourPseudo, int id, const char* filepath_joueurs) {
 	//assert
 	assert(*filepath_joueurs != NULL);
-	assert(id != 0u);
+	assert(id > 0);
 
 	//initialisation
 	const unsigned int tailleAvecTyp = (TAILLE_ID + 4); //strlen(".txt") pour pseudo.txt
 	char pseudoAvecTyp[tailleAvecTyp] = "";
-	unsigned int nbrFichier = 0u;
+	int nbrFichier = 0u;
 
 	//dirent.h
 	DIR* dossier = opendir(filepath_joueurs); // DIR *opendir(const char *dirname);
@@ -378,7 +402,6 @@ void getPseudoSelonID(char * chainePourPseudo, unsigned int id, const char* file
 	}
 	else {
 		// readdir()
-		printf("\nLes pseudos des joueurs enregistres sont les suivants :\n");
 		while ((fichier = readdir(dossier)) != NULL) {
 			if ((strcmp(".", fichier->d_name) != 0) && (strcmp("..", fichier->d_name) != 0)) {
 				++nbrFichier;
@@ -392,6 +415,7 @@ void getPseudoSelonID(char * chainePourPseudo, unsigned int id, const char* file
 	//troncature du pseudo
 	const unsigned int tailleSansTyp = (strlen(pseudoAvecTyp)-4);
 	pseudoAvecTyp[tailleSansTyp] = 0;
+	//assert(strlen(chainePourPseudo) >= strlen(pseudoAvecTyp));
 	strcpy(chainePourPseudo,pseudoAvecTyp);
 }
 
@@ -400,37 +424,75 @@ void getPseudoSelonID(char * chainePourPseudo, unsigned int id, const char* file
 // d'y selectionner et charger pour afficher le detail du profil selectionne
 //de sortir de la boucle menuProfil
 void menuProfil() {
-	int choixAfficheJ = 0;
-	do
-	{
-		affichageJoueursDispo(FILEPATH_JOUEURS);
+	bool joueurDispo = false;
+	joueurDispo = affichageJoueursDispo(FILEPATH_JOUEURS);
+	if (joueurDispo == true){
 		printf("Souhaitez vous : \n");
-		printf("Retourner au Menu Principal : entrez 1.\n");
-		printf("Afficher le profil détaillé d'un joueur : entrez 2.\n");
-		char c = NULL; //verif du dernier caractere est un retour chariot.
-		while ((((scanf("%i%c", &choixAfficheJ, &c)) != 2 || c != '\n') && viderBuffer()) || choixAfficheJ != 1|| choixAfficheJ != 2) {
-			printf("Veuillez entrez un numero valide.\n");
+		printf("Tapez < 1 > : Pour retourner au Menu Principal.\n");
+		printf("Tapez < 2 > : Pour afficher le profil detaille d'un joueur.\n");
+		//initialisation
+		int choixAfficheJ = 0;
+		int nbrCaraEntres = 0;
+		int choixMax = 2;
+		//choix
+		while (choixAfficheJ <= 0 || nbrCaraEntres > 3 || choixAfficheJ > choixMax)
+		{
+			printf("Veuillez entrer un numero valide.\n");
+			nbrCaraEntres = scanf_s("%d", &choixAfficheJ);
 		}
+
 		if (choixAfficheJ == 1) {
 			printf("Retour au Menu Principal.\n");
 		}
 		if (choixAfficheJ == 2) {
-			unsigned int nbrProfilMAX = 0u;
+			int nbrProfilMAX = 0;
 			nbrProfilMAX = nombreProfils(FILEPATH_JOUEURS); //scan des profil pour avoir nbr profil max
-			unsigned int profilXID = 0u;
+			int profilXID = 0;
 			profilXID = choixProfil(nbrProfilMAX); //numero du profil choisi par l user obtenu
-			
+
 			char profilPseudo[TAILLE_ID] = "";
-			getPseudoSelonID(profilPseudo,profilXID, FILEPATH_JOUEURS);
-			
+			getPseudoSelonID(profilPseudo, profilXID, FILEPATH_JOUEURS);//ecrit dans ProfilPseudo le pseudo associé à profilXID
+
 			affichageJoueur(profilPseudo, FILEPATH_JOUEURS); //affichage du profil x
+			menuProfil();
 		}
-	} while (choixAfficheJ != 1);
+	}
 }
 
-//choixJoueur
-/*
-char choixJoueur(int entreUser) {
-	return nom;
+//menuCreationProfil
+void menuCreationProfil() {
+	printf("\n\n***** Creation d'un nouveau profil *****\n\n");
+	Joueur j = NOUVEAU_JOUEUR;
+	Joueur* pj = &j;
+	char pseudo[TAILLE_ID]="";
+	char nom[TAILLE_ID]="";
+	char prenom[TAILLE_ID]="";
+	bool redondanceProfil = true;
+	bool* predondanceProfil = &redondanceProfil;
+	do {
+		printf("Saisissez le PSEUDO du joueur : ");
+		scanf_s("%9s", pseudo, (unsigned)_countof(j.pseudo));
+		viderBuffer();
+
+		printf("Saisissez le PRENOM du joueur : ");
+		scanf_s("%9s", prenom, (unsigned)_countof(j.prenom));
+		viderBuffer();
+
+		printf("Saisissez le NOM du joueur : ");
+		scanf_s("%9s", nom, (unsigned)_countof(j.nom));
+		viderBuffer();
+
+		creationJoueur(pj, pseudo, nom, prenom, FILEPATH_JOUEURS, predondanceProfil);
+
+	} while (prenom != "" && nom != "" && pseudo != "" && redondanceProfil != false);
+
+	//affichage des details du profil avec une phrase
+	printf("\n-%s s'appelle %s %s, il a joue %i parties, son taux de victoire est de %f.\n ",
+		j.pseudo, j.prenom, j.nom, j.partiesJouees, j.partiesRatio);
+	sauvegarderJoueur(j, FILEPATH_JOUEURS);
+	
+	//affichage des nouveau profil
+	printf("\nAffichage des modifications\n.");
+	affichageJoueursDispo(FILEPATH_JOUEURS);
+	printf("Vous allez etre redirige vers le menu principal.\n");
 }
-*/
