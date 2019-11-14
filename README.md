@@ -15,9 +15,9 @@ JALLAIS Adrien : <adrien.jallais@protonmail.com>
 Le Puissance4 est un jeux à géometrie variable.  
 Une présentation du jeu est consultable au lien suivant : <https://fr.wikipedia.org/wiki/Puissance_4> .
 
-## Portabilité
-Nécesitte un compilateur C.
-Des dossiers joueurs et parties doivent être créés au préalable afin de permettre leur sauvegarde.
+### Portabilité
+Nécesitte un compilateur C, ou joueur seulement le fichier x64/Debug/Puissance4.exe
+Deux dossiers 'joueurs' et 'parties' doivent être créés au préalable dans le même dossier que l'executable afin de permettre leur sauvegarde respective.
 
 ### Interface graphique
 + Mode console
