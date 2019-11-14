@@ -59,11 +59,11 @@ L'IA utilisée lors d'une partie contre l'ordinateur est selon Minmax - alpha be
 #### MinMax
 A partir d’une grille de jeu donnee, on génère l’ensemble des positions que l’ordinateur peut atteindre.
 Pour chacunes de ces positions, on génère l’ensemble des posistions que l’adversaire pourrait à son tour atteindre.
-On recommence l’op ́eration aussi lontempsque le permet la puissance de calcul del’ordinateur. 
-On construit ainsi un arbre repr ́esentant l’ensemble des configurations de la grille dujeu pour un certain nombre de coups à l’avance. 
+On recommence l’operation aussi lontemps que le permet la puissance de calcul de l’ordinateur. 
+On construit ainsi un arbre representant l’ensemble des configurations de la grille du jeu pour un certain nombre de coups à l’avance. 
 Il est clair que par cette technique, on ne peut pas construire l’arbre complet de la partie, c’est à dire un arbre dont toutes les feuilles seraient des coups terminaux (gagnant ou match nul). 
 Puisqu’on est obligé de limiter la profondeur de l’arbre, il est nécessaire d’evaluer une position non terminale pour un joueur donné.
 
 #### Algorithme α−β
-Tel que presente ci-dessus, MinMax calcule sans distonctions toutes les positions jouables de chaque grille. 
-Afin de limiter le nombre de noeuds de l’arbre, l’algorithme α−β empêche le calcul des positions jugees inintéressantes.
+Tel que présenté ci-dessus, MinMax calcule sans distonctions toutes les positions jouables de chaque grille. 
+Afin de limiter le nombre de noeuds de l’arbre, l’algorithme α−β empêche le calcul des positions jugées inintéressantes.
