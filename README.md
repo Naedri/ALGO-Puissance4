@@ -14,6 +14,10 @@ JALLAIS Adrien : <adrien.jallais@protonmail.com>
 ## Description
 Jeux selon une géometrie variable
 
+## Portabilité
+Nécesitte un compilateur C.
+Des dossiers joueurs et parties doivent être créés au préalable afin de permettre leur sauvegarde.
+
 ### Interface graphique
 + Mode console
 + Présence d'un Menu 
@@ -28,8 +32,11 @@ Jeux selon une géometrie variable
 + Jeu contre l'ordinateur (IA)
   
 ### Options possibles
-+ Sauvegarde et Chargement de partie
-+ Création de profil des joueur
++ Partie
+++ Sauvegarde et Chargement (format binaire)
++ Profil de joueur
+++ Sauvegarde et Chargement (format binaire)
++ Création et Actualisation des statistiques de jeu
 
 ## Programmation
 
