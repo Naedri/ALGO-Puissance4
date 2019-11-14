@@ -3,8 +3,7 @@ IUT Paris Descartes - 2019 - Enseignant : ZIANE Mikal.
 
 ## Algorithme et Programmation en C.
 
-Dans le cadre du cours de Algorithme et Programmation en C,   
-Mikal Ziane a proposé de développer un jeu : Le puissance 4.
+Dans le cadre du cours de Algorithme et Programmation en C, Mikal Ziane a proposé de développer un jeu : Le puissance 4.
 
 ## Auteurs
 
@@ -35,10 +34,10 @@ Des dossiers joueurs et parties doivent être créés au préalable afin de perm
   
 ### Options possibles
 + Partie
-++ Sauvegarde et Chargement (format binaire)
+  + Sauvegarde et Chargement (format binaire)
 + Profil de joueur
-++ Sauvegarde et Chargement (format binaire)
-+ Création et Actualisation des statistiques de jeu
+  + Sauvegarde et Chargement (format binaire)
+  + Création et Actualisation des statistiques de jeu
 
 ## Programmation
 
