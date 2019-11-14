@@ -1,0 +1,413 @@
+﻿<?xml version="1.0" encoding="utf-8"?><DEFECTS><DEFECT>
+    <SFA>
+      <FILEPATH>C:\Users\Adrien Jallais\Documents\Algo\Puissance4\</FILEPATH>
+      <FILENAME>T2d.cpp</FILENAME>
+      <LINE>21</LINE>
+      <COLUMN>15</COLUMN>
+    </SFA>
+    <DEFECTCODE>6386</DEFECTCODE>
+    <DESCRIPTION>Dépassement de mémoire tampon lors de l'écriture sur 't-&gt;grille' : la taille accessible en écriture est 'largeur*hauteur' octets, mais '2' octets sont peut-être écrits.</DESCRIPTION>
+    <FUNCTION>init</FUNCTION>
+    <DECORATED>?init@@YAXPAUT2d@@II@Z</DECORATED>
+    <FUNCLINE>14</FUNCLINE>
+    <PROBABILITY>1</PROBABILITY>
+    <RANK>4</RANK>
+    <CATEGORY>
+      <RULECATEGORY>mspft</RULECATEGORY>
+    </CATEGORY>
+    <PATH>
+      <SFA>
+        <FILEPATH>C:\Users\Adrien Jallais\Documents\Algo\Puissance4\</FILEPATH>
+        <FILENAME>T2d.cpp</FILENAME>
+        <LINE>15</LINE>
+        <COLUMN>1</COLUMN>
+        <KEYEVENT>
+          <ID>1</ID>
+          <KIND>créer une branche</KIND>
+          <IMPORTANCE>Full</IMPORTANCE>
+          <MESSAGE>Entrer dans cette boucle, (supposer '&lt;condition de branche&gt;')</MESSAGE>
+        </KEYEVENT>
+      </SFA>
+      <SFA>
+        <FILEPATH>C:\Users\Adrien Jallais\Documents\Algo\Puissance4\</FILEPATH>
+        <FILENAME>T2d.cpp</FILENAME>
+        <LINE>16</LINE>
+        <COLUMN>12</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>C:\Users\Adrien Jallais\Documents\Algo\Puissance4\</FILEPATH>
+        <FILENAME>T2d.cpp</FILENAME>
+        <LINE>17</LINE>
+        <COLUMN>12</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>C:\Users\Adrien Jallais\Documents\Algo\Puissance4\</FILEPATH>
+        <FILENAME>T2d.cpp</FILENAME>
+        <LINE>18</LINE>
+        <COLUMN>11</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>C:\Users\Adrien Jallais\Documents\Algo\Puissance4\</FILEPATH>
+        <FILENAME>T2d.cpp</FILENAME>
+        <LINE>19</LINE>
+        <COLUMN>1</COLUMN>
+        <KEYEVENT>
+          <ID>2</ID>
+          <KIND>créer une branche</KIND>
+          <IMPORTANCE>Full</IMPORTANCE>
+          <MESSAGE>Entrer dans cette boucle, (supposer '!!((t-&gt;grille!=0))')</MESSAGE>
+        </KEYEVENT>
+      </SFA>
+      <SFA>
+        <FILEPATH>C:\Users\Adrien Jallais\Documents\Algo\Puissance4\</FILEPATH>
+        <FILENAME>T2d.cpp</FILENAME>
+        <LINE>20</LINE>
+        <COLUMN>19</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>C:\Users\Adrien Jallais\Documents\Algo\Puissance4\</FILEPATH>
+        <FILENAME>T2d.cpp</FILENAME>
+        <LINE>20</LINE>
+        <COLUMN>28</COLUMN>
+        <KEYEVENT>
+          <ID>3</ID>
+          <KIND>créer une branche</KIND>
+          <IMPORTANCE>Full</IMPORTANCE>
+          <MESSAGE>Entrer dans cette boucle, (supposer 'i&lt;largeur*hauteur')</MESSAGE>
+        </KEYEVENT>
+      </SFA>
+      <SFA>
+        <FILEPATH>C:\Users\Adrien Jallais\Documents\Algo\Puissance4\</FILEPATH>
+        <FILENAME>T2d.cpp</FILENAME>
+        <LINE>21</LINE>
+        <COLUMN>15</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>C:\Users\Adrien Jallais\Documents\Algo\Puissance4\</FILEPATH>
+        <FILENAME>T2d.cpp</FILENAME>
+        <LINE>20</LINE>
+        <COLUMN>49</COLUMN>
+        <KEYEVENT>
+          <ID>4</ID>
+          <KIND>déclaration</KIND>
+          <IMPORTANCE>Essential</IMPORTANCE>
+          <MESSAGE>'i' peut être égal à 1</MESSAGE>
+        </KEYEVENT>
+      </SFA>
+      <SFA>
+        <FILEPATH>C:\Users\Adrien Jallais\Documents\Algo\Puissance4\</FILEPATH>
+        <FILENAME>T2d.cpp</FILENAME>
+        <LINE>20</LINE>
+        <COLUMN>28</COLUMN>
+        <KEYEVENT>
+          <ID>5</ID>
+          <KIND>créer une branche</KIND>
+          <IMPORTANCE>Full</IMPORTANCE>
+          <MESSAGE>Continuer cette boucle, (supposer 'i&lt;largeur*hauteur')</MESSAGE>
+        </KEYEVENT>
+      </SFA>
+      <SFA>
+        <FILEPATH>C:\Users\Adrien Jallais\Documents\Algo\Puissance4\</FILEPATH>
+        <FILENAME>T2d.cpp</FILENAME>
+        <LINE>21</LINE>
+        <COLUMN>15</COLUMN>
+        <KEYEVENT>
+          <ID>6</ID>
+          <KIND>utilisation</KIND>
+          <IMPORTANCE>Essential</IMPORTANCE>
+          <MESSAGE>Écriture incorrecte sur 't-&gt;grille', (en dehors de la plage d'écriture)</MESSAGE>
+        </KEYEVENT>
+      </SFA>
+    </PATH>
+  </DEFECT><DEFECT>
+    <SFA>
+      <FILEPATH>C:\Users\Adrien Jallais\Documents\Algo\Puissance4\</FILEPATH>
+      <FILENAME>T2d.cpp</FILENAME>
+      <LINE>146</LINE>
+      <COLUMN>15</COLUMN>
+    </SFA>
+    <DEFECTCODE>6386</DEFECTCODE>
+    <DESCRIPTION>Dépassement de mémoire tampon lors de l'écriture sur 'listeCoups' : la taille accessible en écriture est 'largeur+(unsigned int)1' octets, mais '2' octets sont peut-être écrits.</DESCRIPTION>
+    <FUNCTION>coupsLegaux</FUNCTION>
+    <DECORATED>?coupsLegaux@@YAPADPAUT2d@@@Z</DECORATED>
+    <FUNCLINE>137</FUNCLINE>
+    <PROBABILITY>1</PROBABILITY>
+    <RANK>4</RANK>
+    <CATEGORY>
+      <RULECATEGORY>mspft</RULECATEGORY>
+    </CATEGORY>
+    <PATH>
+      <SFA>
+        <FILEPATH>C:\Users\Adrien Jallais\Documents\Algo\Puissance4\</FILEPATH>
+        <FILENAME>T2d.cpp</FILENAME>
+        <LINE>138</LINE>
+        <COLUMN>14</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>C:\Users\Adrien Jallais\Documents\Algo\Puissance4\</FILEPATH>
+        <FILENAME>T2d.cpp</FILENAME>
+        <LINE>139</LINE>
+        <COLUMN>5</COLUMN>
+        <KEYEVENT>
+          <ID>1</ID>
+          <KIND>déclaration</KIND>
+          <IMPORTANCE>Essential</IMPORTANCE>
+          <MESSAGE>'listeCoups' est un tableau de 0 octets</MESSAGE>
+        </KEYEVENT>
+      </SFA>
+      <SFA>
+        <FILEPATH>C:\Users\Adrien Jallais\Documents\Algo\Puissance4\</FILEPATH>
+        <FILENAME>T2d.cpp</FILENAME>
+        <LINE>140</LINE>
+        <COLUMN>6</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>C:\Users\Adrien Jallais\Documents\Algo\Puissance4\</FILEPATH>
+        <FILENAME>T2d.cpp</FILENAME>
+        <LINE>141</LINE>
+        <COLUMN>14</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>C:\Users\Adrien Jallais\Documents\Algo\Puissance4\</FILEPATH>
+        <FILENAME>T2d.cpp</FILENAME>
+        <LINE>142</LINE>
+        <COLUMN>12</COLUMN>
+        <KEYEVENT>
+          <ID>2</ID>
+          <KIND>créer une branche</KIND>
+          <IMPORTANCE>Full</IMPORTANCE>
+          <MESSAGE>Entrer dans cette boucle, (supposer 'col&lt;=97+largeur-1')</MESSAGE>
+        </KEYEVENT>
+      </SFA>
+      <SFA>
+        <FILEPATH>C:\Users\Adrien Jallais\Documents\Algo\Puissance4\</FILEPATH>
+        <FILENAME>T2d.cpp</FILENAME>
+        <LINE>143</LINE>
+        <COLUMN>6</COLUMN>
+        <KEYEVENT>
+          <ID>3</ID>
+          <KIND>créer une branche</KIND>
+          <IMPORTANCE>Full</IMPORTANCE>
+          <MESSAGE>Entrer dans cette branche, (supposer '!estRemplie(t, col)')</MESSAGE>
+        </KEYEVENT>
+      </SFA>
+      <SFA>
+        <FILEPATH>C:\Users\Adrien Jallais\Documents\Algo\Puissance4\</FILEPATH>
+        <FILENAME>T2d.cpp</FILENAME>
+        <LINE>144</LINE>
+        <COLUMN>19</COLUMN>
+        <KEYEVENT>
+          <ID>4</ID>
+          <KIND>déclaration</KIND>
+          <IMPORTANCE>Essential</IMPORTANCE>
+          <MESSAGE>'i' peut être égal à 1</MESSAGE>
+        </KEYEVENT>
+      </SFA>
+      <SFA>
+        <FILEPATH>C:\Users\Adrien Jallais\Documents\Algo\Puissance4\</FILEPATH>
+        <FILENAME>T2d.cpp</FILENAME>
+        <LINE>142</LINE>
+        <COLUMN>34</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>C:\Users\Adrien Jallais\Documents\Algo\Puissance4\</FILEPATH>
+        <FILENAME>T2d.cpp</FILENAME>
+        <LINE>142</LINE>
+        <COLUMN>12</COLUMN>
+        <KEYEVENT>
+          <ID>5</ID>
+          <KIND>créer une branche</KIND>
+          <IMPORTANCE>Full</IMPORTANCE>
+          <MESSAGE>Quitter cette boucle, ('col&lt;=97+largeur-1' a la valeur false)</MESSAGE>
+        </KEYEVENT>
+      </SFA>
+      <SFA>
+        <FILEPATH>C:\Users\Adrien Jallais\Documents\Algo\Puissance4\</FILEPATH>
+        <FILENAME>T2d.cpp</FILENAME>
+        <LINE>146</LINE>
+        <COLUMN>15</COLUMN>
+        <KEYEVENT>
+          <ID>6</ID>
+          <KIND>utilisation</KIND>
+          <IMPORTANCE>Essential</IMPORTANCE>
+          <MESSAGE>Écriture incorrecte sur 'listeCoups', (en dehors de la plage d'écriture)</MESSAGE>
+        </KEYEVENT>
+      </SFA>
+    </PATH>
+  </DEFECT><DEFECT>
+    <SFA>
+      <FILEPATH>C:\Users\Adrien Jallais\Documents\Algo\Puissance4\</FILEPATH>
+      <FILENAME>T2d.cpp</FILENAME>
+      <LINE>146</LINE>
+      <COLUMN>15</COLUMN>
+    </SFA>
+    <DEFECTCODE>6011</DEFECTCODE>
+    <DESCRIPTION>Suppression de la référence du pointeur NULL 'listeCoups'. </DESCRIPTION>
+    <FUNCTION>coupsLegaux</FUNCTION>
+    <DECORATED>?coupsLegaux@@YAPADPAUT2d@@@Z</DECORATED>
+    <FUNCLINE>137</FUNCLINE>
+    <PROBABILITY>1</PROBABILITY>
+    <RANK>4</RANK>
+    <CATEGORY>
+      <RULECATEGORY>mspft</RULECATEGORY>
+    </CATEGORY>
+    <PATH>
+      <SFA>
+        <FILEPATH>C:\Users\Adrien Jallais\Documents\Algo\Puissance4\</FILEPATH>
+        <FILENAME>T2d.cpp</FILENAME>
+        <LINE>138</LINE>
+        <COLUMN>14</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>C:\Users\Adrien Jallais\Documents\Algo\Puissance4\</FILEPATH>
+        <FILENAME>T2d.cpp</FILENAME>
+        <LINE>139</LINE>
+        <COLUMN>5</COLUMN>
+        <KEYEVENT>
+          <ID>1</ID>
+          <KIND>déclaration</KIND>
+          <IMPORTANCE>Essential</IMPORTANCE>
+          <MESSAGE>'listeCoups' peut avoir la valeur NULL</MESSAGE>
+        </KEYEVENT>
+      </SFA>
+      <SFA>
+        <FILEPATH>C:\Users\Adrien Jallais\Documents\Algo\Puissance4\</FILEPATH>
+        <FILENAME>T2d.cpp</FILENAME>
+        <LINE>140</LINE>
+        <COLUMN>6</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>C:\Users\Adrien Jallais\Documents\Algo\Puissance4\</FILEPATH>
+        <FILENAME>T2d.cpp</FILENAME>
+        <LINE>141</LINE>
+        <COLUMN>14</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>C:\Users\Adrien Jallais\Documents\Algo\Puissance4\</FILEPATH>
+        <FILENAME>T2d.cpp</FILENAME>
+        <LINE>142</LINE>
+        <COLUMN>12</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>C:\Users\Adrien Jallais\Documents\Algo\Puissance4\</FILEPATH>
+        <FILENAME>T2d.cpp</FILENAME>
+        <LINE>146</LINE>
+        <COLUMN>15</COLUMN>
+        <KEYEVENT>
+          <ID>2</ID>
+          <KIND>utilisation</KIND>
+          <IMPORTANCE>Essential</IMPORTANCE>
+          <MESSAGE>'listeCoups' est déréférencé, mais peut encore avoir la valeur NULL</MESSAGE>
+        </KEYEVENT>
+      </SFA>
+    </PATH>
+  </DEFECT><DEFECT>
+    <SFA>
+      <FILEPATH>C:\Users\Adrien Jallais\Documents\Algo\Puissance4\</FILEPATH>
+      <FILENAME>T2d.cpp</FILENAME>
+      <LINE>186</LINE>
+      <COLUMN>18</COLUMN>
+    </SFA>
+    <DEFECTCODE>6386</DEFECTCODE>
+    <DESCRIPTION>Dépassement de mémoire tampon lors de l'écriture sur 'copie.grille' : la taille accessible en écriture est 'copie.largeur*copie.hauteur' octets, mais '2' octets sont peut-être écrits.</DESCRIPTION>
+    <FUNCTION>copy</FUNCTION>
+    <DECORATED>?copy@@YA?BUT2d@@PBU1@@Z</DECORATED>
+    <FUNCLINE>180</FUNCLINE>
+    <PROBABILITY>1</PROBABILITY>
+    <RANK>4</RANK>
+    <CATEGORY>
+      <RULECATEGORY>mspft</RULECATEGORY>
+    </CATEGORY>
+    <PATH>
+      <SFA>
+        <FILEPATH>C:\Users\Adrien Jallais\Documents\Algo\Puissance4\</FILEPATH>
+        <FILENAME>T2d.cpp</FILENAME>
+        <LINE>181</LINE>
+        <COLUMN>5</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>C:\Users\Adrien Jallais\Documents\Algo\Puissance4\</FILEPATH>
+        <FILENAME>T2d.cpp</FILENAME>
+        <LINE>182</LINE>
+        <COLUMN>15</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>C:\Users\Adrien Jallais\Documents\Algo\Puissance4\</FILEPATH>
+        <FILENAME>T2d.cpp</FILENAME>
+        <LINE>183</LINE>
+        <COLUMN>15</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>C:\Users\Adrien Jallais\Documents\Algo\Puissance4\</FILEPATH>
+        <FILENAME>T2d.cpp</FILENAME>
+        <LINE>184</LINE>
+        <COLUMN>14</COLUMN>
+        <KEYEVENT>
+          <ID>1</ID>
+          <KIND>utilisation</KIND>
+          <IMPORTANCE>Full</IMPORTANCE>
+          <MESSAGE>'copie' est une entrée dans 'malloc' (déclarée au niveau de c:\program files (x86)\windows kits\10\include\10.0.18362.0\ucrt\corecrt_malloc.h:97)</MESSAGE>
+        </KEYEVENT>
+      </SFA>
+      <SFA>
+        <FILEPATH>C:\Users\Adrien Jallais\Documents\Algo\Puissance4\</FILEPATH>
+        <FILENAME>T2d.cpp</FILENAME>
+        <LINE>185</LINE>
+        <COLUMN>19</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>C:\Users\Adrien Jallais\Documents\Algo\Puissance4\</FILEPATH>
+        <FILENAME>T2d.cpp</FILENAME>
+        <LINE>185</LINE>
+        <COLUMN>28</COLUMN>
+        <KEYEVENT>
+          <ID>2</ID>
+          <KIND>créer une branche</KIND>
+          <IMPORTANCE>Full</IMPORTANCE>
+          <MESSAGE>Entrer dans cette boucle, (supposer 'i&lt;copie.largeur*copie.hauteur')</MESSAGE>
+        </KEYEVENT>
+      </SFA>
+      <SFA>
+        <FILEPATH>C:\Users\Adrien Jallais\Documents\Algo\Puissance4\</FILEPATH>
+        <FILENAME>T2d.cpp</FILENAME>
+        <LINE>186</LINE>
+        <COLUMN>18</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>C:\Users\Adrien Jallais\Documents\Algo\Puissance4\</FILEPATH>
+        <FILENAME>T2d.cpp</FILENAME>
+        <LINE>185</LINE>
+        <COLUMN>61</COLUMN>
+        <KEYEVENT>
+          <ID>3</ID>
+          <KIND>déclaration</KIND>
+          <IMPORTANCE>Essential</IMPORTANCE>
+          <MESSAGE>'i' peut être égal à 1</MESSAGE>
+        </KEYEVENT>
+      </SFA>
+      <SFA>
+        <FILEPATH>C:\Users\Adrien Jallais\Documents\Algo\Puissance4\</FILEPATH>
+        <FILENAME>T2d.cpp</FILENAME>
+        <LINE>185</LINE>
+        <COLUMN>28</COLUMN>
+        <KEYEVENT>
+          <ID>4</ID>
+          <KIND>créer une branche</KIND>
+          <IMPORTANCE>Full</IMPORTANCE>
+          <MESSAGE>Continuer cette boucle, (supposer 'i&lt;copie.largeur*copie.hauteur')</MESSAGE>
+        </KEYEVENT>
+      </SFA>
+      <SFA>
+        <FILEPATH>C:\Users\Adrien Jallais\Documents\Algo\Puissance4\</FILEPATH>
+        <FILENAME>T2d.cpp</FILENAME>
+        <LINE>186</LINE>
+        <COLUMN>18</COLUMN>
+        <KEYEVENT>
+          <ID>5</ID>
+          <KIND>utilisation</KIND>
+          <IMPORTANCE>Essential</IMPORTANCE>
+          <MESSAGE>Écriture incorrecte sur 'copie.grille', (en dehors de la plage d'écriture)</MESSAGE>
+        </KEYEVENT>
+      </SFA>
+    </PATH>
+  </DEFECT></DEFECTS>
